@@ -4,10 +4,11 @@ import java.util.List;
 
 public class GeneticAlgorithm {
 
-	private long populationSize;
+	private int populationSize;
 	private SelectionMethod selection;
 	private MutationMethod mutation;
 	private CrossoverMethod crossover;
+	private long maxIterations = 100;
 
 	/**
 	 * @param populationSize
@@ -15,7 +16,7 @@ public class GeneticAlgorithm {
 	 * @param mutation
 	 * @param crossover
 	 */
-	public GeneticAlgorithm(long populationSize, SelectionMethod selection,
+	public GeneticAlgorithm(int populationSize, SelectionMethod selection,
 			MutationMethod mutation, CrossoverMethod crossover) {
 		super();
 		this.populationSize = populationSize;
@@ -24,6 +25,12 @@ public class GeneticAlgorithm {
 		this.crossover = crossover;
 	}
 
+	/**
+	 * Find the best individual for the given fitness function
+	 * 
+	 * @param fitness
+	 * @return
+	 */
 	public Individual solve(FitnessFunction fitness) {
 		Population population = initpop(this.populationSize);
 		long i = 0;
@@ -44,14 +51,25 @@ public class GeneticAlgorithm {
 		return null;
 	}
 
+	/**
+	 * Determine if process must stop
+	 * 
+	 * @param population
+	 * @param i
+	 * @return
+	 */
 	private boolean termination(Population population, long i) {
-		// TODO Auto-generated method stub
-		return false;
+		return i > this.maxIterations;
 	}
 
-	private Population initpop(long populationSize2) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Initialize the population with the given size
+	 * 
+	 * @param populationSize2
+	 * @return
+	 */
+	private Population initpop(int populationSize2) {
+		return Population.initpop(populationSize2);
 	}
 
 }
