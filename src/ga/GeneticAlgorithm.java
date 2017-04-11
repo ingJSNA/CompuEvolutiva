@@ -1,7 +1,5 @@
 package ga;
 
-import java.util.List;
-
 public class GeneticAlgorithm {
 
 	private int populationSize;
@@ -32,7 +30,7 @@ public class GeneticAlgorithm {
 	 * @return
 	 */
 	public Individual solve(FitnessFunction fitness) {
-		Population population = initpop(this.populationSize);
+		Individual[] population = initpop(this.populationSize);
 		long i = 0;
 		while (!termination(population, i)) {
 			population = next(population, fitness);
@@ -41,12 +39,12 @@ public class GeneticAlgorithm {
 		return best(population);
 	}
 
-	private Population next(Population population, FitnessFunction fitness) {
+	private Individual[] next(Individual[] population, FitnessFunction fitness) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private Individual best(Population population) {
+	private Individual best(Individual[] population) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,7 +56,7 @@ public class GeneticAlgorithm {
 	 * @param i
 	 * @return
 	 */
-	private boolean termination(Population population, long i) {
+	private boolean termination(Individual[] population, long i) {
 		return i > this.maxIterations;
 	}
 
@@ -68,8 +66,9 @@ public class GeneticAlgorithm {
 	 * @param populationSize2
 	 * @return
 	 */
-	private Population initpop(int populationSize2) {
-		return Population.initpop(populationSize2);
+	private Individual[] initpop(int populationSize) {
+		int individualDimensions = 9;
+		return PopulationBuilder.initpop(populationSize, individualDimensions);
 	}
 
 }
