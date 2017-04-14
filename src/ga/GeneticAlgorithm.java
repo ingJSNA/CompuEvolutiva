@@ -3,10 +3,10 @@ package ga;
 public class GeneticAlgorithm {
 
 	private int populationSize;
-	private SelectionMethod selection;
-	private MutationMethod mutation;
-	private CrossoverMethod crossover;
+	private SelectionMethod selectionMethod;
+	private GeneticOperator geneticOperator;
 	private long maxIterations = 100;
+	private ReplaceMethod replaceMehod;
 
 	/**
 	 * @param populationSize
@@ -14,13 +14,11 @@ public class GeneticAlgorithm {
 	 * @param mutation
 	 * @param crossover
 	 */
-	public GeneticAlgorithm(int populationSize, SelectionMethod selection,
-			MutationMethod mutation, CrossoverMethod crossover) {
+	public GeneticAlgorithm(int populationSize, SelectionMethod selection, GeneticOperator crossover) {
 		super();
 		this.populationSize = populationSize;
-		this.selection = selection;
-		this.mutation = mutation;
-		this.crossover = crossover;
+		this.selectionMethod = selection;
+		this.geneticOperator = crossover;
 	}
 
 	/**
@@ -39,9 +37,18 @@ public class GeneticAlgorithm {
 		return best(population);
 	}
 
+	/**
+	 * Generate the next generation.
+	 * 
+	 * @param population
+	 * @param fitness
+	 * @return
+	 */
 	private Individual[] next(Individual[] population, FitnessFunction fitness) {
-		// TODO Auto-generated method stub
-		return null;
+		Individual[] parents = selectionMethod.select(population, fitness);
+		Individual[] offspring1 = geneticOperator.operate(parents, fitness);
+		Individual[] offspring = replaceMehod.replace(population, offspring1, fitness);
+		return offspring;
 	}
 
 	/**
