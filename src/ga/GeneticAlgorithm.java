@@ -3,10 +3,13 @@ package ga;
 public class GeneticAlgorithm {
 
 	private static final int NUMBER_OF_PARENTS = 2;
+	private static final int DIMENSIONS = 9;
+	private static final long ITERATIONS = 100;
+
 	private int populationSize;
 	private SelectionMethod selectionMethod;
 	private GeneticOperator geneticOperator;
-	private long maxIterations = 100;
+
 	private ReplaceMethod replaceMehod;
 
 	/**
@@ -77,7 +80,7 @@ public class GeneticAlgorithm {
 	 * @return
 	 */
 	private boolean termination(Individual[] population, long i) {
-		return i > this.maxIterations;
+		return i > GeneticAlgorithm.ITERATIONS;
 	}
 
 	/**
@@ -87,8 +90,8 @@ public class GeneticAlgorithm {
 	 * @return
 	 */
 	private Individual[] initpop(int populationSize) {
-		int individualDimensions = 9;
-		return PopulationBuilder.initpop(populationSize, individualDimensions);
+
+		return PopulationBuilder.initpop(populationSize, DIMENSIONS);
 	}
 
 }

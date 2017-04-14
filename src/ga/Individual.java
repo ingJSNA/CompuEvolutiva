@@ -29,4 +29,12 @@ public class Individual {
 		return array;
 	}
 
+	/**
+	 * @param array
+	 *            the array to set
+	 */
+	public void setArray(BitSet array) {
+		this.array = array;
+	}
+
 }

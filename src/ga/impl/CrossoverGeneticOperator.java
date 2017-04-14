@@ -30,7 +30,7 @@ public class CrossoverGeneticOperator implements GeneticOperator {
 	 */
 	@Override
 	public Individual[] operate(Individual[] parents, FitnessFunction fitness) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

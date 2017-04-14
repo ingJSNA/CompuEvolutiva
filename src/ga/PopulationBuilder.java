@@ -3,9 +3,9 @@ package ga;
 import java.util.BitSet;
 import java.util.Random;
 
-public class PopulationBuilder {
+import org.apache.commons.lang3.RandomUtils;
 
-	private static final Random RANDOM = new Random();
+public class PopulationBuilder {
 
 	private PopulationBuilder() {
 	}
@@ -30,9 +30,10 @@ public class PopulationBuilder {
 	private static Individual getNewIndividual(int dimensions) {
 		Individual individual = new Individual();
 		BitSet bitset = new BitSet(dimensions);
-		for (int i = 0; i < bitset.length(); i++) {
-			bitset.set(i, RANDOM.nextBoolean());
+		for (int i = 0; i < dimensions; i++) {
+			bitset.set(i, RandomUtils.nextBoolean());
 		}
+		individual.setArray(bitset);
 		return individual;
 	}
 }
