@@ -9,4 +9,6 @@ package ga;
  */
 public interface CrossoverMethod {
 
+	public Individual[] cross(Individual... individual);
+
 }
