@@ -2,6 +2,7 @@ package ga;
 
 public class GeneticAlgorithm {
 
+	private static final int NUMBER_OF_PARENTS = 2;
 	private int populationSize;
 	private SelectionMethod selectionMethod;
 	private GeneticOperator geneticOperator;
@@ -14,11 +15,12 @@ public class GeneticAlgorithm {
 	 * @param mutation
 	 * @param crossover
 	 */
-	public GeneticAlgorithm(int populationSize, SelectionMethod selection, GeneticOperator crossover) {
+	public GeneticAlgorithm(int populationSize, SelectionMethod selection,
+			GeneticOperator geneticOperator) {
 		super();
 		this.populationSize = populationSize;
 		this.selectionMethod = selection;
-		this.geneticOperator = crossover;
+		this.geneticOperator = geneticOperator;
 	}
 
 	/**
@@ -45,7 +47,7 @@ public class GeneticAlgorithm {
 	 * @return
 	 */
 	private Individual[] next(Individual[] population, FitnessFunction fitness) {
-		Individual[] parents = selectionMethod.select(population, fitness);
+		Individual[] parents = selectionMethod.select(NUMBER_OF_PARENTS, population, fitness);
 		Individual[] offspring1 = geneticOperator.operate(parents, fitness);
 		Individual[] offspring = replaceMehod.replace(population, offspring1, fitness);
 		return offspring;
