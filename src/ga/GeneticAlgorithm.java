@@ -44,9 +44,20 @@ public class GeneticAlgorithm {
 		return null;
 	}
 
+	/**
+	 * Find the individual with the lowest fitness
+	 * 
+	 * @param population
+	 * @return
+	 */
 	private Individual best(Individual[] population) {
-		// TODO Auto-generated method stub
-		return null;
+		Individual best = population[0];
+		for (Individual individual : population) {
+			if (individual.getFitness() < best.getFitness()) {
+				best = individual;
+			}
+		}
+		return best;
 	}
 
 	/**
