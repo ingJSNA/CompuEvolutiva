@@ -19,11 +19,12 @@ public class GeneticAlgorithm {
 	 * @param crossover
 	 */
 	public GeneticAlgorithm(int populationSize, SelectionMethod selection,
-			GeneticOperator geneticOperator) {
+			GeneticOperator geneticOperator, ReplaceMethod replaceMehod) {
 		super();
 		this.populationSize = populationSize;
 		this.selectionMethod = selection;
 		this.geneticOperator = geneticOperator;
+		this.replaceMehod = replaceMehod;
 	}
 
 	/**

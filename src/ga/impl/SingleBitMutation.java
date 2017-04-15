@@ -3,6 +3,8 @@
  */
 package ga.impl;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import ga.Individual;
 import ga.MutationMethod;
 
@@ -14,8 +16,9 @@ public class SingleBitMutation implements MutationMethod {
 
 	@Override
 	public Individual mutate(Individual individual) {
-		// TODO Auto-generated method stub
-		return null;
+		int mutationIndex = RandomUtils.nextInt(0, individual.getArray().size());
+		individual.getArray().flip(mutationIndex);
+		return individual;
 	}
 
 }

@@ -2,6 +2,7 @@ package ga;
 
 import static org.junit.Assert.*;
 import ga.impl.CrossoverGeneticOperator;
+import ga.impl.ElitismReplace;
 import ga.impl.ImageSimilarity;
 import ga.impl.SingleBitMutation;
 import ga.impl.UniformSelection;
@@ -28,8 +29,13 @@ public class GeneticAlgorithmTest {
 		CrossoverMethod crossover = new OnePointCrossover();
 		MutationMethod mutation = new SingleBitMutation();
 		GeneticOperator geneticOperator = new CrossoverGeneticOperator(crossover, mutation);
-		GeneticAlgorithm ga = new GeneticAlgorithm(populationSize, selection, geneticOperator);
+
+		ReplaceMethod replace = new ElitismReplace();
+		GeneticAlgorithm ga = new GeneticAlgorithm(populationSize, selection, geneticOperator,
+				replace);
+
 		FitnessFunction fitness = new ImageSimilarity();
+
 		assertNotNull(ga.solve(fitness));
 	}
 
