@@ -7,6 +7,11 @@ public class Individual {
 	private double fitness;
 	private BitSet array;
 
+	public Individual() {
+		this.fitness = Double.MAX_VALUE;
+		array = new BitSet();
+	}
+
 	/**
 	 * @return the fitness
 	 */

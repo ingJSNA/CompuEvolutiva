@@ -38,10 +38,12 @@ public class CrossoverGeneticOperator implements GeneticOperator {
 		for (int i = 0; i < parents.length; i += 2) {
 			double r = RandomUtils.nextDouble(0, 1);
 			if (r <= Pxover) {
-				Individual[] of = crossover.cross(parents[i], parents[i + 1]);
-
+				offspring = crossover.cross(parents[i], parents[i + 1]);
+				offspring[i] = mutation.mutate(offspring[i]);
+				offspring[i + 1] = mutation.mutate(offspring[i + 1]);
 			} else {
-
+				offspring[i] = parents[i];
+				offspring[i + 1] = parents[i + 1];
 			}
 		}
 		return offspring;

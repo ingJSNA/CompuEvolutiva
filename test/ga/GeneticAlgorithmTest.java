@@ -5,7 +5,7 @@ import ga.impl.CrossoverGeneticOperator;
 import ga.impl.ImageSimilarity;
 import ga.impl.SingleBitMutation;
 import ga.impl.UniformSelection;
-import ga.impl.XOver;
+import ga.impl.OnePointCrossover;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class GeneticAlgorithmTest {
 	public final void testSolve() {
 		int populationSize = 100;
 		SelectionMethod selection = new UniformSelection();
-		CrossoverMethod crossover = new XOver();
+		CrossoverMethod crossover = new OnePointCrossover();
 		MutationMethod mutation = new SingleBitMutation();
 		GeneticOperator geneticOperator = new CrossoverGeneticOperator(crossover, mutation);
 		GeneticAlgorithm ga = new GeneticAlgorithm(populationSize, selection, geneticOperator);
