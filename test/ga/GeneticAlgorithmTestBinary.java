@@ -16,6 +16,8 @@
  */
 package ga;
 
+import ga.commons.StatisticGeneticAlgorithm;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class GeneticAlgorithmTestBinary {
 		// to test a stochastic algorithm is hard, so this will rather be an usage example
 
 		// initialize a new genetic algorithm
-		GeneticAlgorithm ga = new GeneticAlgorithm(new OnePointCrossover<Integer>(),
+		GeneticAlgorithm ga = new StatisticGeneticAlgorithm(new OnePointCrossover<Integer>(),
 				CROSSOVER_RATE, // all selected chromosomes will be recombined (=crosssover)
 				new BinaryMutation(), MUTATION_RATE, new TournamentSelection(TOURNAMENT_ARITY));
 
