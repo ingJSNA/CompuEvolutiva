@@ -5,12 +5,13 @@ import java.util.List;
 
 public class Node<T> {
 
-	private List<Node<T>> children = new ArrayList<Node<T>>();
+	private List<Node<T>> children;
 	private Node<T> parent = null;
-	private T data = null;
+	private T data;
 
 	public Node(T data) {
 		this.data = data;
+		children = new ArrayList<Node<T>>();
 	}
 
 	public Node(T data, Node<T> parent) {
