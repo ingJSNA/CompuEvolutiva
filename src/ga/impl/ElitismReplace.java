@@ -20,11 +20,10 @@ public class ElitismReplace implements ReplaceMethod {
 
 			@Override
 			public int compare(Individual o1, Individual o2) {
-				// TODO Auto-generated method stub
-				return 0;
+				return Double.compare(o1.getFitness(), o2.getFitness());
 			}
 		});
-		return null;
+		return Arrays.copyOf(P, population.length);
 	}
 
 }

@@ -36,7 +36,9 @@ public class GeneticAlgorithmTest {
 
 		FitnessFunction fitness = new ImageSimilarity();
 
-		assertNotNull(ga.solve(fitness));
+		Individual solution = ga.solve(fitness);
+		assertNotNull(solution);
+		System.out.println(solution.getArray());
 	}
 
 }
