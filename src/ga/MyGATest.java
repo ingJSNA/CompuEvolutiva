@@ -16,6 +16,7 @@ import unalcol.search.population.PopulationDescriptors;
 import unalcol.search.population.PopulationSearch;
 import unalcol.search.selection.Roulette;
 import unalcol.search.selection.Selection;
+import unalcol.search.selection.Tournament;
 import unalcol.search.solution.Solution;
 import unalcol.search.space.Space;
 import unalcol.search.variation.Variation_1_1;
@@ -43,7 +44,7 @@ public class MyGATest {
 		Goal<BitArray, Double> goal = new OptimizationGoal<BitArray>(function, false);
 
 		// Variation definition
-		Selection<BitArray> parent_selection = new Roulette<BitArray>();
+		Selection<BitArray> parent_selection = new Tournament<BitArray>(4);
 		Variation_1_1<BitArray> mutation = new BitMutation();
 		XOver xover = new XOver();
 		double xover_probability = 1.0;
