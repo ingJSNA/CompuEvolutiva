@@ -1,4 +1,4 @@
-package geneticprograming;
+package gp;
 
 import unalcol.optimization.OptimizationFunction;
 

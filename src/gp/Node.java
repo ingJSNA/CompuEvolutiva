@@ -1,4 +1,4 @@
-package geneticprograming;
+package gp;
 
 public class Node {
 
