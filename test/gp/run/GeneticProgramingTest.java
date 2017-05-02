@@ -1,6 +1,7 @@
 package gp.run;
 
 import static org.junit.Assert.*;
+import gp.GeneticPrograming;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,5 +1,7 @@
 package gp;
 
+import org.apache.commons.lang3.RandomUtils;
+
 public class Node {
 
 	protected String oper;
@@ -7,16 +9,19 @@ public class Node {
 	protected Node right;
 	protected Node parent;
 
+	// TODO how initialize?
+	private static Expression expression = new Expression();
+
 	public Node(Node parent, int h) {
 		this.parent = parent;
 		if (h == 0) {
-			// TODO
-			oper = "Variable o número";
+			String[] variableAndTerminals = expression.getVariblesAndTerminals();
+			oper = variableAndTerminals[RandomUtils.nextInt(0, variableAndTerminals.length)];
 			left = null;
 			right = null;
 		} else {
-			// TODO
-			oper = "Operador";
+			String[] functions = expression.getFunctions();
+			oper = functions[RandomUtils.nextInt(0, functions.length)];
 			left = new Node(this, h - 1);
 			right = new Node(this, h - 1);
 		}

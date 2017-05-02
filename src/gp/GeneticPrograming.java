@@ -1,10 +1,4 @@
-package gp.run;
-
-import gp.Node;
-import gp.NodeCrossover;
-import gp.NodeFitness;
-import gp.NodeMutation;
-import gp.NodeSpace;
+package gp;
 
 import java.util.concurrent.Callable;
 
@@ -32,7 +26,6 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 
 public class GeneticPrograming implements Callable<Double> {
 
-	private static final int DIM = 24;
 	private static final int POPSIZE = 100;
 	private static final int MAXITERS = 1_000;
 
