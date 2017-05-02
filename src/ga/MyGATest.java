@@ -1,5 +1,7 @@
 package ga;
 
+import java.util.concurrent.Callable;
+
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;
 import unalcol.evolution.EAFactory;
@@ -26,13 +28,13 @@ import unalcol.tracer.Tracer;
 import unalcol.types.collection.bitarray.BitArray;
 import unalcol.types.real.array.DoubleArrayPlainWrite;
 
-public class MyGATest {
+public class MyGATest implements Callable<Double> {
 
 	private static final int DIM = 24;
 	private static final int POPSIZE = 100;
 	private static final int MAXITERS = 1_000;
 
-	public static void binary() {
+	private static Double binary() {
 		// Search Space definition
 
 		Space<BitArray> space = new BinarySpace(DIM);
@@ -66,8 +68,8 @@ public class MyGATest {
 		// Uncomment if you want to trace the function evaluations
 		// Tracer.addTracer(goal, tracer);
 
-		Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
-											// hill-climbing algorithm
+		// Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
+		// hill-climbing algorithm
 
 		// Apply the search method
 		Solution<BitArray> solution = search.solve(space, goal);
@@ -76,10 +78,21 @@ public class MyGATest {
 
 		System.out.println(solution.info(Goal.class.getName()));
 		System.out.println(solution.object());
+		return (Double) solution.info(Goal.class.getName());
 	}
 
 	public static void main(String[] args) {
-		binary();
+		try {
+			System.out.println(new MyGATest().call());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Double call() throws Exception {
+		return binary();
 	}
 
 }
