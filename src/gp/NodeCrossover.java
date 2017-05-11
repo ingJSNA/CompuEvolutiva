@@ -19,17 +19,21 @@ public class NodeCrossover extends Variation_2_2<Node> {
 		Node temp = n1.clone(n1.parent);
 
 		n1.parent = n2.parent;
-		if (n2.parent.left.equals(n2)) {
-			n2.parent.left = n1;
-		} else if (n2.parent.right.equals(n2)) {
-			n2.parent.right = n1;
+		if (n2.parent != null) {
+			if (n2.equals(n2.parent.left)) {
+				n2.parent.left = n1;
+			} else if (n2.equals(n2.parent.right)) {
+				n2.parent.right = n1;
+			}
 		}
 
 		n2.parent = temp.parent;
-		if (temp.parent.left.equals(temp)) {
-			temp.parent.left = n2;
-		} else if (temp.parent.right.equals(temp)) {
-			temp.parent.right = n2;
+		if (temp.parent != null) {
+			if (temp.equals(temp.parent.left)) {
+				temp.parent.left = n2;
+			} else if (temp.equals(temp.parent.right)) {
+				temp.parent.right = n2;
+			}
 		}
 
 		return new Node[] { childOne, childTwo };

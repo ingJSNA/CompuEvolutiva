@@ -85,13 +85,14 @@ public class Node {
 	}
 
 	public Node get(int index) {
-		LOG.debug("index: {}. left: {}. right: {}. weight: {}", index, left, right, weight());
+		LOG.debug("index: {}. this: {}. left: {}. right: {}. weight: {}", index, this, left, right,
+				weight());
 		if (index == 0) {
 			return this;
 		} else {
 			index--;
-			int wLeft = left == null ? -1 : left.weight();
-			if (index <= wLeft) {
+			int wLeft = left == null ? 0 : left.weight();
+			if (index < wLeft) {
 				return left.get(index);
 			} else {
 				return right.get(index - wLeft);
