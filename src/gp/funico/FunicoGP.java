@@ -41,7 +41,7 @@ public class FunicoGP implements Callable<Double> {
 		Space<Node> space = new NodeSpace();
 
 		// Optimization Function
-		OptimizationFunction<Node> function = new NodeFitness();
+		OptimizationFunction<Node> function = new NodeFitness(null);
 
 		// maximizing, remove the parameter false if minimizing
 		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, false);

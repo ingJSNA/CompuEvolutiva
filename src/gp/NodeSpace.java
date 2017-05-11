@@ -1,5 +1,7 @@
 package gp;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import unalcol.search.space.Space;
 
 public class NodeSpace extends Space<Node> {
@@ -7,25 +9,24 @@ public class NodeSpace extends Space<Node> {
 	@Override
 	public boolean feasible(Node x) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public double feasibility(Node x) {
-		// TODO Auto-generated method stub
-		return 0;
+		return feasible(x) ? 1 : 0;
 	}
 
 	@Override
 	public Node repair(Node x) {
 		// TODO Auto-generated method stub
-		return null;
+		return x;
 	}
 
 	@Override
 	public Node pick() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Node(null, RandomUtils.nextInt(0, 5));
 	}
 
 }

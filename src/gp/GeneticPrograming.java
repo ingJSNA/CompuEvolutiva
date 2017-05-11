@@ -1,5 +1,7 @@
 package gp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import unalcol.descriptors.Descriptors;
@@ -35,7 +37,13 @@ public class GeneticPrograming implements Callable<Double> {
 		Space<Node> space = new NodeSpace();
 
 		// Optimization Function
-		OptimizationFunction<Node> function = new NodeFitness();
+		List<Example> examples = new ArrayList<Example>();
+		examples.add(new Example(f(5, 4), 5, 4));
+		examples.add(new Example(f(17, 4), 17, 4));
+		examples.add(new Example(f(5, 21), 5, 4));
+		examples.add(new Example(f(55, 4), 55, 4));
+
+		OptimizationFunction<Node> function = new NodeFitness(examples);
 
 		// maximizing, remove the parameter false if minimizing
 		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, false);
@@ -74,6 +82,10 @@ public class GeneticPrograming implements Callable<Double> {
 		System.out.println(solution.info(Goal.class.getName()));
 		System.out.println(solution.object());
 		return (Double) solution.info(Goal.class.getName());
+	}
+
+	private static int f(int x, int y) {
+		return (int) (Math.pow(x, 2) + 3 * x * y - 4);
 	}
 
 	@Override

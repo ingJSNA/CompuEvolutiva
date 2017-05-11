@@ -1,5 +1,6 @@
 package gp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import unalcol.optimization.OptimizationFunction;
@@ -7,6 +8,10 @@ import unalcol.optimization.OptimizationFunction;
 public class NodeFitness extends OptimizationFunction<Node> {
 
 	private List<Example> examples;
+
+	public NodeFitness(List<Example> examples) {
+		this.examples = new ArrayList<Example>(examples);
+	}
 
 	@Override
 	public Double apply(Node x) {
