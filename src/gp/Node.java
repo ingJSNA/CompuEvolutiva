@@ -1,8 +1,12 @@
 package gp;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Node {
+
+	private static final Logger LOG = LoggerFactory.getLogger(Node.class);
 
 	protected String oper;
 	protected Node left;
@@ -32,6 +36,12 @@ public class Node {
 		this.oper = oper;
 	}
 
+	/**
+	 * Clone the current node with its children, and set the given parent.
+	 * 
+	 * @param parent
+	 * @return
+	 */
 	public Node clone(Node parent) {
 		Node n = new Node(parent, oper);
 		if (!isLeaf()) {
@@ -75,11 +85,12 @@ public class Node {
 	}
 
 	public Node get(int index) {
+		LOG.debug("index: {}. left: {}. right: {}. weight: {}", index, left, right, weight());
 		if (index == 0) {
 			return this;
 		} else {
 			index--;
-			int wLeft = left.weight();
+			int wLeft = left == null ? -1 : left.weight();
 			if (index <= wLeft) {
 				return left.get(index);
 			} else {
