@@ -1,7 +1,8 @@
 package gp.run;
 
 import static org.junit.Assert.*;
-import gp.GeneticPrograming;
+import gp.GeneticProgramming;
+import gp.calculator.CalculatorGP;
 import gp.funico.FunicoGP;
 
 import org.junit.After;
@@ -21,7 +22,8 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testCalculator() {
 		try {
-			Double best = new GeneticPrograming().call();
+			GeneticProgramming instance = CalculatorGP.getInstance();
+			Double best = instance.evolve();
 			assertNotNull(best);
 
 		} catch (Exception e) {
@@ -35,7 +37,8 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			Double best = new FunicoGP().call();
+			GeneticProgramming instance = CalculatorGP.getInstance();
+			Double best = instance.evolve();
 			assertNotNull(best);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

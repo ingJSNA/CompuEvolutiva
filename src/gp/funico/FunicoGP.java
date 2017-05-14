@@ -1,11 +1,16 @@
 package gp.funico;
 
+import gp.Example;
+import gp.GeneticProgramming;
 import gp.Node;
 import gp.NodeCrossover;
 import gp.NodeFitness;
 import gp.NodeMutation;
 import gp.NodeSpace;
+import gp.calculator.CalculatorGP;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import unalcol.descriptors.Descriptors;
@@ -30,21 +35,35 @@ import unalcol.tracer.Tracer;
 import unalcol.types.collection.bitarray.BitArray;
 import unalcol.types.real.array.DoubleArrayPlainWrite;
 
-public class FunicoGP implements Callable<Double> {
+public class FunicoGP extends GeneticProgramming {
 
-	private static final int POPSIZE = 100;
-	private static final int MAXITERS = 1_000;
+	public static FunicoGP getInstance() {
+		return new FunicoGP();
+	}
 
-	private static Double evolve() {
+	@Override
+	public double evolve() {
 		// Search Space definition
 
 		Space<Node> space = new NodeSpace();
 
 		// Optimization Function
-		OptimizationFunction<Node> function = new NodeFitness(null);
+		List<Example> examples = new ArrayList<Example>();
+		examples.add(new Example(5, 4));
+		examples.add(new Example(17, 4));
+		examples.add(new Example(5, 21));
+		examples.add(new Example(55, 4));
+		examples.add(new Example(0, 0));
+		examples.add(new Example(2, 0));
+		examples.add(new Example(-2, 0));
+		examples.add(new Example(-4, 1));
+		examples.add(new Example(1, 1));
+		examples.add(new Example(4, -1));
+
+		OptimizationFunction<Node> function = new NodeFitness(examples);
 
 		// maximizing, remove the parameter false if minimizing
-		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, false);
+		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, true);
 
 		// Variation definition
 		Selection<Node> parent_selection = new Tournament<Node>(4);
@@ -69,7 +88,7 @@ public class FunicoGP implements Callable<Double> {
 		// Uncomment if you want to trace the function evaluations
 		// Tracer.addTracer(goal, tracer);
 
-		// Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
+		Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
 		// hill-climbing algorithm
 
 		// Apply the search method
@@ -80,10 +99,5 @@ public class FunicoGP implements Callable<Double> {
 		System.out.println(solution.info(Goal.class.getName()));
 		System.out.println(solution.object());
 		return (Double) solution.info(Goal.class.getName());
-	}
-
-	@Override
-	public Double call() throws Exception {
-		return evolve();
 	}
 }

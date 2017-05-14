@@ -1,4 +1,4 @@
-package gp;
+package gp.calculator;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,12 @@
-package gp;
+package gp.calculator;
+
+import gp.Example;
+import gp.GeneticProgramming;
+import gp.Node;
+import gp.NodeCrossover;
+import gp.NodeFitness;
+import gp.NodeMutation;
+import gp.NodeSpace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +34,18 @@ import unalcol.tracer.Tracer;
 import unalcol.types.collection.bitarray.BitArray;
 import unalcol.types.real.array.DoubleArrayPlainWrite;
 
-public class GeneticPrograming implements Callable<Double> {
+public class CalculatorGP extends GeneticProgramming {
 
-	private static final int POPSIZE = 100;
-	private static final int MAXITERS = 500;
+	public static CalculatorGP getInstance() {
+		CalculatorGP gp = new CalculatorGP();
+		return gp;
+	}
 
-	private static Double evolve() {
+	private CalculatorGP() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public double evolve() {
 		// Search Space definition
 
 		Space<Node> space = new NodeSpace();
@@ -90,8 +104,4 @@ public class GeneticPrograming implements Callable<Double> {
 		return (Double) solution.info(Goal.class.getName());
 	}
 
-	@Override
-	public Double call() throws Exception {
-		return evolve();
-	}
 }

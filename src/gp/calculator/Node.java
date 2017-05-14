@@ -1,4 +1,4 @@
-package gp;
+package gp.calculator;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
