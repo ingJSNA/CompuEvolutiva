@@ -46,7 +46,7 @@ public class GeneticPrograming implements Callable<Double> {
 		OptimizationFunction<Node> function = new NodeFitness(examples);
 
 		// maximizing, remove the parameter false if minimizing
-		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, false);
+		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, true);
 
 		// Variation definition
 		Selection<Node> parent_selection = new Tournament<Node>(4);
@@ -71,7 +71,7 @@ public class GeneticPrograming implements Callable<Double> {
 		// Uncomment if you want to trace the function evaluations
 		// Tracer.addTracer(goal, tracer);
 
-		// Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
+		Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
 		// hill-climbing algorithm
 
 		// Apply the search method

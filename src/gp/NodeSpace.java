@@ -19,7 +19,7 @@ public class NodeSpace extends Space<Node> {
 
 	@Override
 	public Node repair(Node x) {
-		// TODO Auto-generated method stub
+		x.repair();
 		return x;
 	}
 

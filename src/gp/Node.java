@@ -1,5 +1,6 @@
 package gp;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,5 +110,26 @@ public class Node {
 			string = "(" + left + " " + this.oper + " " + right + ")";
 		}
 		return string;
+	}
+
+	/**
+	 * Repair this node
+	 */
+	public void repair() {
+		if (this.isLeaf() && ArrayUtils.contains(expression.getFunctions(), this.oper)) {
+			String[] variableAndTerminals = expression.getVariblesAndTerminals();
+			this.left = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
+					variableAndTerminals.length)]);
+			this.right = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
+					variableAndTerminals.length)]);
+		} else {
+			if (left != null) {
+				left.repair();
+			}
+			if (right != null) {
+				right.repair();
+			}
+		}
+
 	}
 }
