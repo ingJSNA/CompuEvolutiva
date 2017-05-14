@@ -99,4 +99,15 @@ public class Node {
 			}
 		}
 	}
+
+	@Override
+	public String toString() {
+		String string;
+		if (this.isLeaf()) {
+			string = this.oper;
+		} else {
+			string = "(" + left + " " + this.oper + " " + right + ")";
+		}
+		return string;
+	}
 }

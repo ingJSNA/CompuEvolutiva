@@ -27,4 +27,8 @@ public class Expression {
 		return ArrayUtils.addAll(functions);
 	}
 
+	public String[] getAll() {
+		return ArrayUtils.addAll(getFunctions(), getVariblesAndTerminals());
+	}
+
 }
