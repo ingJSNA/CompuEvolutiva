@@ -2,44 +2,44 @@ package gp;
 
 public class Example {
 
-	private int answer;
-	private int x;
-	private int y;
+	private double answer;
+	private double x;
+	private double y;
 
 	/**
 	 * @param answer
 	 * @param x
 	 * @param y
 	 */
-	public Example(int x, int y) {
+	public Example(double x, double y) {
 		super();
 		this.answer = f(x, y);
 		this.x = x;
 		this.y = y;
 	}
 
-	private int f(int x, int y) {
-		return (int) (Math.pow(x, 2) + 3 * x * y - 4);
+	private double f(double x, double y) {
+		return Math.pow(x, 2) + 3 * x * y - 4;
 	}
 
 	/**
 	 * @return the answer
 	 */
-	public int getAnswer() {
+	public double getAnswer() {
 		return answer;
 	}
 
 	/**
 	 * @return the x
 	 */
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 

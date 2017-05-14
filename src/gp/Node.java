@@ -56,7 +56,7 @@ public class Node {
 		return left == null;
 	}
 
-	public int evaluate(int x, int y) {
+	public double evaluate(double x, double y) {
 		switch (oper) {
 		case "*":
 			return left.evaluate(x, y) * right.evaluate(x, y);
@@ -68,7 +68,7 @@ public class Node {
 			return y;
 
 		default:
-			return Integer.parseInt(oper);
+			return Double.parseDouble(oper);
 		}
 	}
 
@@ -103,11 +103,11 @@ public class Node {
 
 	@Override
 	public String toString() {
-		String string;
+		String string = "";
 		if (this.isLeaf()) {
 			string = this.oper;
 		} else {
-			string = "(" + left + " " + this.oper + " " + right + ")";
+			string += "(" + left + " " + this.oper + " " + right + ")";
 		}
 		return string;
 	}

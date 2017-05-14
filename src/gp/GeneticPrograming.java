@@ -29,7 +29,7 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 public class GeneticPrograming implements Callable<Double> {
 
 	private static final int POPSIZE = 100;
-	private static final int MAXITERS = 300;
+	private static final int MAXITERS = 500;
 
 	private static Double evolve() {
 		// Search Space definition
@@ -88,10 +88,6 @@ public class GeneticPrograming implements Callable<Double> {
 		System.out.println(solution.info(Goal.class.getName()));
 		System.out.println(solution.object());
 		return (Double) solution.info(Goal.class.getName());
-	}
-
-	private static int f(int x, int y) {
-		return (int) (Math.pow(x, 2) + 3 * x * y - 4);
 	}
 
 	@Override

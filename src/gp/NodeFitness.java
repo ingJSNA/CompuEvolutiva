@@ -26,7 +26,12 @@ public class NodeFitness extends OptimizationFunction<Node> {
 		for (Example e : examples) {
 			diff += Math.abs(e.getAnswer() - x.evaluate(e.getX(), e.getY()));
 		}
-		return diff + x.weight();
+
+		// Calc the fitness
+		double fitness = diff;
+		fitness += ((double) x.weight()) / examples.size();
+
+		return fitness;
 	}
 
 }
