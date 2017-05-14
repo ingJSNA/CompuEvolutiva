@@ -26,7 +26,7 @@ public class NodeFitness extends OptimizationFunction<Node> {
 		for (Example e : examples) {
 			diff += Math.abs(e.getAnswer() - x.evaluate(e.getX(), e.getY()));
 		}
-		return diff;
+		return diff + x.weight();
 	}
 
 }

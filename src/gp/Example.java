@@ -11,11 +11,15 @@ public class Example {
 	 * @param x
 	 * @param y
 	 */
-	public Example(int answer, int x, int y) {
+	public Example(int x, int y) {
 		super();
-		this.answer = answer;
+		this.answer = f(x, y);
 		this.x = x;
 		this.y = y;
+	}
+
+	private int f(int x, int y) {
+		return (int) (Math.pow(x, 2) + 3 * x * y - 4);
 	}
 
 	/**

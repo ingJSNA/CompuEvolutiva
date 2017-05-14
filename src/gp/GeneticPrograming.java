@@ -29,7 +29,7 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 public class GeneticPrograming implements Callable<Double> {
 
 	private static final int POPSIZE = 100;
-	private static final int MAXITERS = 1_000;
+	private static final int MAXITERS = 300;
 
 	private static Double evolve() {
 		// Search Space definition
@@ -38,10 +38,16 @@ public class GeneticPrograming implements Callable<Double> {
 
 		// Optimization Function
 		List<Example> examples = new ArrayList<Example>();
-		examples.add(new Example(f(5, 4), 5, 4));
-		examples.add(new Example(f(17, 4), 17, 4));
-		examples.add(new Example(f(5, 21), 5, 4));
-		examples.add(new Example(f(55, 4), 55, 4));
+		examples.add(new Example(5, 4));
+		examples.add(new Example(17, 4));
+		examples.add(new Example(5, 21));
+		examples.add(new Example(55, 4));
+		examples.add(new Example(0, 0));
+		examples.add(new Example(2, 0));
+		examples.add(new Example(-2, 0));
+		examples.add(new Example(-4, 1));
+		examples.add(new Example(1, 1));
+		examples.add(new Example(4, -1));
 
 		OptimizationFunction<Node> function = new NodeFitness(examples);
 

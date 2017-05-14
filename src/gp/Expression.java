@@ -31,4 +31,16 @@ public class Expression {
 		return ArrayUtils.addAll(getFunctions(), getVariblesAndTerminals());
 	}
 
+	public boolean isFunction(String oper) {
+		return ArrayUtils.contains(getFunctions(), oper);
+	}
+
+	public boolean isTerminal(String oper) {
+		return ArrayUtils.contains(terminals, oper);
+	}
+
+	public boolean isVariable(String oper) {
+		return ArrayUtils.contains(variables, oper);
+	}
+
 }

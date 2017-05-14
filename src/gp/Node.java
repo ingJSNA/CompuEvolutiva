@@ -116,12 +116,16 @@ public class Node {
 	 * Repair this node
 	 */
 	public void repair() {
-		if (this.isLeaf() && ArrayUtils.contains(expression.getFunctions(), this.oper)) {
+
+		if (this.isLeaf() && expression.isFunction(oper)) {
 			String[] variableAndTerminals = expression.getVariblesAndTerminals();
 			this.left = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
 					variableAndTerminals.length)]);
 			this.right = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
 					variableAndTerminals.length)]);
+		} else if (!this.isLeaf() && (expression.isTerminal(oper) || expression.isVariable(oper))) {
+			this.left = null;
+			this.right = null;
 		} else {
 			if (left != null) {
 				left.repair();

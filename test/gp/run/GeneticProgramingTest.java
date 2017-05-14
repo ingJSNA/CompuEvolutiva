@@ -23,6 +23,7 @@ public class GeneticProgramingTest {
 		try {
 			Double best = new GeneticPrograming().call();
 			assertNotNull(best);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
