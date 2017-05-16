@@ -1,47 +1,36 @@
 package gp.funico;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.validator.GenericValidator;
+import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
-public class Expression {
+class Expression {
 
-	private String[] variables = new String[] { "X", "Y" };
-	private String[] functions = new String[] { "*", "+" };
-	private String[] terminals;
+	private final Set<String> variables;
+	private final Set<String> terminals;
+	private final Set<String> mainFunctors;
+	private final Map<String, Integer> functors;
+	private final Set<String> variablesAndTerminals;
 
-	public Expression() {
-		List<String> list = new ArrayList<String>(19);
-		for (int i = -9; i <= 9; i++) {
-			list.add(String.valueOf(i));
-		}
-		terminals = list.toArray(new String[list.size()]);
+	public Expression(Extractor extractor) {
+		this.mainFunctors = extractor.getTableMainFunctors();
+		this.functors = extractor.getTableFunctors();
+		this.terminals = extractor.getTableTerminals();
+		this.variables = extractor.getTableVariables();
+
+		variablesAndTerminals = new HashSet<String>(variables);
+		variablesAndTerminals.addAll(terminals);
+
 	}
 
-	public String[] getVariblesAndTerminals() {
-		return ArrayUtils.addAll(variables, terminals);
+	public Set<String> getVariblesAndTerminals() {
+		return variablesAndTerminals;
 	}
 
-	public String[] getFunctions() {
-		return ArrayUtils.addAll(functions);
-	}
-
-	public String[] getAll() {
-		return ArrayUtils.addAll(getFunctions(), getVariblesAndTerminals());
-	}
-
-	public boolean isFunction(String oper) {
-		return ArrayUtils.contains(getFunctions(), oper);
-	}
-
-	public boolean isTerminal(String oper) {
-		return ArrayUtils.contains(terminals, oper);
-	}
-
-	public boolean isVariable(String oper) {
-		return ArrayUtils.contains(variables, oper);
+	public Set<String> getFunctions() {
+		return functors.keySet();
 	}
 
 }

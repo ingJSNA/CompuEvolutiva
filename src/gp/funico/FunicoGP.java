@@ -52,6 +52,7 @@ public class FunicoGP extends GeneticProgramming {
 		funicoGP.maxEquations = maxEquations;
 		funicoGP.maxNodesByEquation = maxNodesByEquation;
 		funicoGP.extractor = extractor;
+
 		return funicoGP;
 	}
 
@@ -63,7 +64,7 @@ public class FunicoGP extends GeneticProgramming {
 	public double evolve() {
 		// Search Space definition
 
-		Space<EquationNode> space = new NodeSpace();
+		Space<EquationNode> space = new ForestSpace(new Expression(extractor));
 
 		// Optimization Function
 		List<Example> examples = new ArrayList<Example>();
@@ -92,8 +93,8 @@ public class FunicoGP extends GeneticProgramming {
 		// Search method
 
 		EAFactory<EquationNode> factory = new EAFactory<EquationNode>();
-		PopulationSearch<EquationNode, Double> search = factory.generational_ga(POPSIZE, parent_selection,
-				mutation, xover, xover_probability, MAXITERS);
+		PopulationSearch<EquationNode, Double> search = factory.generational_ga(POPSIZE,
+				parent_selection, mutation, xover, xover_probability, MAXITERS);
 
 		// Tracking the goal evaluations
 		WriteDescriptors write_desc = new WriteDescriptors();

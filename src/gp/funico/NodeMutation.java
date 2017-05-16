@@ -4,7 +4,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_1_1;
 
-public class NodeMutation extends Variation_1_1<EquationNode> {
+class NodeMutation extends Variation_1_1<EquationNode> {
 
 	@Override
 	public EquationNode apply(EquationNode gen) {
@@ -14,7 +14,8 @@ public class NodeMutation extends Variation_1_1<EquationNode> {
 		int m = RandomUtils.nextInt(0, n);
 		EquationNode mutate_node = gen.get(m);
 
-		String[] code = new Expression().getAll();
+		// TODO
+		String[] code = new String[] { "?" };
 		int x = RandomUtils.nextInt(0, code.length);
 		mutate_node.oper = code[x];
 

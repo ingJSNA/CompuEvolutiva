@@ -1,35 +1,37 @@
 package gp.funico;
 
+import java.util.Set;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EquationNode {
+import util.RandomCollectionsUtils;
+
+class EquationNode {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EquationNode.class);
+
+	private Expression expression;
 
 	protected String oper;
 	protected EquationNode left;
 	protected EquationNode right;
 	protected EquationNode parent;
 
-	// TODO how initialize?
-	private static Expression expression = new Expression();
-
-	public EquationNode(EquationNode parent, int h) {
+	public EquationNode(Expression expression, EquationNode parent, int h) {
 		this.parent = parent;
+		this.expression = expression;
 		if (h == 0) {
-			String[] variableAndTerminals = expression.getVariblesAndTerminals();
-			oper = variableAndTerminals[RandomUtils.nextInt(0, variableAndTerminals.length)];
+			oper = RandomCollectionsUtils.getItem(this.expression.getVariblesAndTerminals());
 			left = null;
 			right = null;
 		} else {
-			String[] functions = expression.getFunctions();
-			oper = functions[RandomUtils.nextInt(0, functions.length)];
-			left = new EquationNode(this, h - 1);
-			right = new EquationNode(this, h - 1);
+			oper = RandomCollectionsUtils.getItem(this.expression.getFunctions());
+			left = new EquationNode(expression, this, h - 1);
+			right = new EquationNode(expression, this, h - 1);
 		}
 	}
 
@@ -133,13 +135,12 @@ public class EquationNode {
 	 */
 	public void repair() {
 
-		if (this.isLeaf() && expression.isFunction(oper)) {
-			String[] variableAndTerminals = expression.getVariblesAndTerminals();
-			this.left = new EquationNode(this, variableAndTerminals[RandomUtils.nextInt(0,
-					variableAndTerminals.length)]);
-			this.right = new EquationNode(this, variableAndTerminals[RandomUtils.nextInt(0,
-					variableAndTerminals.length)]);
-		} else if (!this.isLeaf() && (expression.isTerminal(oper) || expression.isVariable(oper))) {
+		if (this.isLeaf() && expression.getFunctions().contains(oper)) {
+			this.left = new EquationNode(this, RandomCollectionsUtils.getItem(this.expression
+					.getVariblesAndTerminals()));
+			this.right = new EquationNode(this, RandomCollectionsUtils.getItem(this.expression
+					.getVariblesAndTerminals()));
+		} else if (!this.isLeaf() && expression.getVariblesAndTerminals().contains(oper)) {
 			this.left = null;
 			this.right = null;
 		} else {

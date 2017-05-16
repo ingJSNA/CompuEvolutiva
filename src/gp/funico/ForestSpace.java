@@ -4,7 +4,14 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.space.Space;
 
-public class NodeSpace extends Space<EquationNode> {
+public class ForestSpace extends Space<EquationNode> {
+
+	private Expression expression;
+
+	public ForestSpace(Expression expression) {
+		super();
+		this.expression = expression;
+	}
 
 	@Override
 	public boolean feasible(EquationNode x) {
@@ -26,7 +33,7 @@ public class NodeSpace extends Space<EquationNode> {
 	@Override
 	public EquationNode pick() {
 		// TODO Auto-generated method stub
-		return new EquationNode(null, RandomUtils.nextInt(0, 5));
+		return new EquationNode(expression, null, RandomUtils.nextInt(0, 5));
 	}
 
 }
