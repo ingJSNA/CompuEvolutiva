@@ -63,7 +63,7 @@ public class FunicoGP extends GeneticProgramming {
 	public double evolve() {
 		// Search Space definition
 
-		Space<Node> space = new NodeSpace();
+		Space<EquationNode> space = new NodeSpace();
 
 		// Optimization Function
 		List<Example> examples = new ArrayList<Example>();
@@ -78,21 +78,21 @@ public class FunicoGP extends GeneticProgramming {
 		examples.add(new Example(1, 1));
 		examples.add(new Example(4, -1));
 
-		OptimizationFunction<Node> function = new NodeFitness(examples);
+		OptimizationFunction<EquationNode> function = new NodeFitness(examples);
 
 		// maximizing, remove the parameter false if minimizing
-		Goal<Node, Double> goal = new OptimizationGoal<Node>(function, true);
+		Goal<EquationNode, Double> goal = new OptimizationGoal<EquationNode>(function, true);
 
 		// Variation definition
-		Selection<Node> parent_selection = new Tournament<Node>(4);
-		Variation_1_1<Node> mutation = new NodeMutation();
-		Variation_2_2<Node> xover = new NodeCrossover();
+		Selection<EquationNode> parent_selection = new Tournament<EquationNode>(4);
+		Variation_1_1<EquationNode> mutation = new NodeMutation();
+		Variation_2_2<EquationNode> xover = new NodeCrossover();
 		double xover_probability = 1.0;
 
 		// Search method
 
-		EAFactory<Node> factory = new EAFactory<Node>();
-		PopulationSearch<Node, Double> search = factory.generational_ga(POPSIZE, parent_selection,
+		EAFactory<EquationNode> factory = new EAFactory<EquationNode>();
+		PopulationSearch<EquationNode, Double> search = factory.generational_ga(POPSIZE, parent_selection,
 				mutation, xover, xover_probability, MAXITERS);
 
 		// Tracking the goal evaluations
@@ -110,7 +110,7 @@ public class FunicoGP extends GeneticProgramming {
 		// hill-climbing algorithm
 
 		// Apply the search method
-		Solution<Node> solution = search.solve(space, goal);
+		Solution<EquationNode> solution = search.solve(space, goal);
 
 		tracer.close();
 

@@ -4,29 +4,29 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.space.Space;
 
-public class NodeSpace extends Space<Node> {
+public class NodeSpace extends Space<EquationNode> {
 
 	@Override
-	public boolean feasible(Node x) {
+	public boolean feasible(EquationNode x) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public double feasibility(Node x) {
+	public double feasibility(EquationNode x) {
 		return feasible(x) ? 1 : 0;
 	}
 
 	@Override
-	public Node repair(Node x) {
+	public EquationNode repair(EquationNode x) {
 		x.repair();
 		return x;
 	}
 
 	@Override
-	public Node pick() {
+	public EquationNode pick() {
 		// TODO Auto-generated method stub
-		return new Node(null, RandomUtils.nextInt(0, 5));
+		return new EquationNode(null, RandomUtils.nextInt(0, 5));
 	}
 
 }

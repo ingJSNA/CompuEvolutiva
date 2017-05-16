@@ -4,19 +4,19 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_2_2;
 
-public class NodeCrossover extends Variation_2_2<Node> {
+public class NodeCrossover extends Variation_2_2<EquationNode> {
 
 	@Override
-	public Node[] apply(Node one, Node two) {
-		Node childOne = one.clone(null);
-		Node childTwo = two.clone(null);
+	public EquationNode[] apply(EquationNode one, EquationNode two) {
+		EquationNode childOne = one.clone(null);
+		EquationNode childTwo = two.clone(null);
 
 		int c1 = RandomUtils.nextInt(0, childOne.weight());
 		int c2 = RandomUtils.nextInt(0, childTwo.weight());
 
-		Node n1 = childOne.get(c1);
-		Node n2 = childTwo.get(c2);
-		Node temp = n1.clone(n1.parent);
+		EquationNode n1 = childOne.get(c1);
+		EquationNode n2 = childTwo.get(c2);
+		EquationNode temp = n1.clone(n1.parent);
 
 		n1.parent = n2.parent;
 		if (n2.parent != null) {
@@ -36,6 +36,6 @@ public class NodeCrossover extends Variation_2_2<Node> {
 			}
 		}
 
-		return new Node[] { childOne, childTwo };
+		return new EquationNode[] { childOne, childTwo };
 	}
 }

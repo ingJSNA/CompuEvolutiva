@@ -1,4 +1,4 @@
-package gp;
+package gp.funico;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -6,19 +6,19 @@ import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Node {
+public class EquationNode {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Node.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EquationNode.class);
 
 	protected String oper;
-	protected Node left;
-	protected Node right;
-	protected Node parent;
+	protected EquationNode left;
+	protected EquationNode right;
+	protected EquationNode parent;
 
 	// TODO how initialize?
 	private static Expression expression = new Expression();
 
-	public Node(Node parent, int h) {
+	public EquationNode(EquationNode parent, int h) {
 		this.parent = parent;
 		if (h == 0) {
 			String[] variableAndTerminals = expression.getVariblesAndTerminals();
@@ -28,14 +28,23 @@ public class Node {
 		} else {
 			String[] functions = expression.getFunctions();
 			oper = functions[RandomUtils.nextInt(0, functions.length)];
-			left = new Node(this, h - 1);
-			right = new Node(this, h - 1);
+			left = new EquationNode(this, h - 1);
+			right = new EquationNode(this, h - 1);
 		}
 	}
 
-	public Node(Node parent, String oper) {
+	public EquationNode(EquationNode parent, String oper) {
 		this.parent = parent;
 		this.oper = oper;
+	}
+
+	/**
+	 * Copy constructor
+	 * 
+	 * @param other
+	 */
+	public EquationNode(EquationNode other) {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -44,8 +53,8 @@ public class Node {
 	 * @param parent
 	 * @return
 	 */
-	public Node clone(Node parent) {
-		Node n = new Node(parent, oper);
+	public EquationNode clone(EquationNode parent) {
+		EquationNode n = new EquationNode(parent, oper);
 		if (!isLeaf()) {
 			n.left = left.clone(n);
 			n.right = right.clone(n);
@@ -86,7 +95,7 @@ public class Node {
 		}
 	}
 
-	public Node get(int index) {
+	public EquationNode get(int index) {
 		LOG.debug("index: {}. this: {}. left: {}. right: {}. weight: {}", index, this, left, right,
 				weight());
 		if (index == 0) {
@@ -126,9 +135,9 @@ public class Node {
 
 		if (this.isLeaf() && expression.isFunction(oper)) {
 			String[] variableAndTerminals = expression.getVariblesAndTerminals();
-			this.left = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
+			this.left = new EquationNode(this, variableAndTerminals[RandomUtils.nextInt(0,
 					variableAndTerminals.length)]);
-			this.right = new Node(this, variableAndTerminals[RandomUtils.nextInt(0,
+			this.right = new EquationNode(this, variableAndTerminals[RandomUtils.nextInt(0,
 					variableAndTerminals.length)]);
 		} else if (!this.isLeaf() && (expression.isTerminal(oper) || expression.isVariable(oper))) {
 			this.left = null;

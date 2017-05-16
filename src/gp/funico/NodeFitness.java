@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import unalcol.optimization.OptimizationFunction;
 
-public class NodeFitness extends OptimizationFunction<Node> {
+public class NodeFitness extends OptimizationFunction<EquationNode> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NodeFitness.class);
 
@@ -19,7 +19,7 @@ public class NodeFitness extends OptimizationFunction<Node> {
 	}
 
 	@Override
-	public Double apply(Node x) {
+	public Double apply(EquationNode x) {
 		LOG.debug("Nodo: {}.", x);
 
 		double diff = 0;
