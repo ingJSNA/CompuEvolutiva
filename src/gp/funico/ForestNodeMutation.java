@@ -4,10 +4,10 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_1_1;
 
-class NodeMutation extends Variation_1_1<EquationNode> {
+class ForestNodeMutation extends Variation_1_1<ForestNode> {
 
 	@Override
-	public EquationNode apply(EquationNode gen) {
+	public ForestNode apply(ForestNode gen) {
 		gen = gen.clone(null);
 
 		int n = gen.weight();

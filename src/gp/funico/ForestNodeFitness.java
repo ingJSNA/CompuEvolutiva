@@ -8,18 +8,18 @@ import org.slf4j.LoggerFactory;
 
 import unalcol.optimization.OptimizationFunction;
 
-public class NodeFitness extends OptimizationFunction<EquationNode> {
+class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(NodeFitness.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ForestNodeFitness.class);
 
 	private List<Example> examples;
 
-	public NodeFitness(List<Example> examples) {
+	public ForestNodeFitness(List<Example> examples) {
 		this.examples = new ArrayList<Example>(examples);
 	}
 
 	@Override
-	public Double apply(EquationNode x) {
+	public Double apply(ForestNode x) {
 		LOG.debug("Nodo: {}.", x);
 
 		double diff = 0;
@@ -29,7 +29,6 @@ public class NodeFitness extends OptimizationFunction<EquationNode> {
 
 		// Calc the fitness
 		double fitness = diff;
-		fitness += ((double) x.weight()) / examples.size();
 
 		return fitness;
 	}

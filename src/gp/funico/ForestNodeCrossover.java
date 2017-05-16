@@ -4,10 +4,10 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_2_2;
 
-public class NodeCrossover extends Variation_2_2<EquationNode> {
+class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 
 	@Override
-	public EquationNode[] apply(EquationNode one, EquationNode two) {
+	public ForestNode[] apply(ForestNode one, ForestNode two) {
 		EquationNode childOne = one.clone(null);
 		EquationNode childTwo = two.clone(null);
 
@@ -36,6 +36,6 @@ public class NodeCrossover extends Variation_2_2<EquationNode> {
 			}
 		}
 
-		return new EquationNode[] { childOne, childTwo };
+		return new ForestNode[] { childOne, childTwo };
 	}
 }

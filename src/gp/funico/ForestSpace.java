@@ -1,39 +1,45 @@
 package gp.funico;
 
-import org.apache.commons.lang3.RandomUtils;
-
 import unalcol.search.space.Space;
 
-public class ForestSpace extends Space<EquationNode> {
+public class ForestSpace extends Space<ForestNode> {
 
 	private Expression expression;
+	private int maxEquations;
+	private int maxNodesByEquation;
 
-	public ForestSpace(Expression expression) {
+	/**
+	 * @param expression
+	 * @param maxEquations
+	 * @param maxNodesByEquation
+	 */
+	public ForestSpace(Expression expression, int maxEquations, int maxNodesByEquation) {
 		super();
 		this.expression = expression;
+		this.maxEquations = maxEquations;
+		this.maxNodesByEquation = maxNodesByEquation;
 	}
 
 	@Override
-	public boolean feasible(EquationNode x) {
-		// TODO Auto-generated method stub
+	public boolean feasible(ForestNode x) {
+		// TODO
 		return true;
 	}
 
 	@Override
-	public double feasibility(EquationNode x) {
+	public double feasibility(ForestNode x) {
 		return feasible(x) ? 1 : 0;
 	}
 
 	@Override
-	public EquationNode repair(EquationNode x) {
+	public ForestNode repair(ForestNode x) {
 		x.repair();
 		return x;
 	}
 
 	@Override
-	public EquationNode pick() {
-		// TODO Auto-generated method stub
-		return new EquationNode(expression, null, RandomUtils.nextInt(0, 5));
+	public ForestNode pick() {
+		return new ForestNode(maxEquations, maxNodesByEquation, expression);
 	}
 
 }

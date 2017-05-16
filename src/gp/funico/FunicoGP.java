@@ -2,23 +2,9 @@ package gp.funico;
 
 import gp.GeneticProgramming;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
-
-import co.edu.unal.funico.interpreter.funico.interpreter.ExampleException;
-import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
-import co.edu.unal.funico.interpreter.funico.interpreter.GoalException;
-import co.edu.unal.funico.interpreter.funico.interpreter.ProgramException;
-import co.edu.unal.funico.interpreter.funico.language.LexicalException;
-import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;
 import unalcol.evolution.EAFactory;
@@ -40,6 +26,7 @@ import unalcol.tracer.FileTracer;
 import unalcol.tracer.Tracer;
 import unalcol.types.collection.bitarray.BitArray;
 import unalcol.types.real.array.DoubleArrayPlainWrite;
+import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
 public class FunicoGP extends GeneticProgramming {
 
@@ -52,7 +39,6 @@ public class FunicoGP extends GeneticProgramming {
 		funicoGP.maxEquations = maxEquations;
 		funicoGP.maxNodesByEquation = maxNodesByEquation;
 		funicoGP.extractor = extractor;
-
 		return funicoGP;
 	}
 
@@ -64,7 +50,8 @@ public class FunicoGP extends GeneticProgramming {
 	public double evolve() {
 		// Search Space definition
 
-		Space<EquationNode> space = new ForestSpace(new Expression(extractor));
+		Space<ForestNode> space = new ForestSpace(new Expression(extractor), maxEquations,
+				maxNodesByEquation);
 
 		// Optimization Function
 		List<Example> examples = new ArrayList<Example>();
@@ -79,21 +66,21 @@ public class FunicoGP extends GeneticProgramming {
 		examples.add(new Example(1, 1));
 		examples.add(new Example(4, -1));
 
-		OptimizationFunction<EquationNode> function = new NodeFitness(examples);
+		OptimizationFunction<ForestNode> function = new ForestNodeFitness(examples);
 
 		// maximizing, remove the parameter false if minimizing
-		Goal<EquationNode, Double> goal = new OptimizationGoal<EquationNode>(function, true);
+		Goal<ForestNode, Double> goal = new OptimizationGoal<ForestNode>(function, true);
 
 		// Variation definition
-		Selection<EquationNode> parent_selection = new Tournament<EquationNode>(4);
-		Variation_1_1<EquationNode> mutation = new NodeMutation();
-		Variation_2_2<EquationNode> xover = new NodeCrossover();
+		Selection<ForestNode> parent_selection = new Tournament<ForestNode>(4);
+		Variation_1_1<ForestNode> mutation = new ForestNodeMutation();
+		Variation_2_2<ForestNode> xover = new ForestNodeCrossover();
 		double xover_probability = 1.0;
 
 		// Search method
 
-		EAFactory<EquationNode> factory = new EAFactory<EquationNode>();
-		PopulationSearch<EquationNode, Double> search = factory.generational_ga(POPSIZE,
+		EAFactory<ForestNode> factory = new EAFactory<ForestNode>();
+		PopulationSearch<ForestNode, Double> search = factory.generational_ga(POPSIZE,
 				parent_selection, mutation, xover, xover_probability, MAXITERS);
 
 		// Tracking the goal evaluations
@@ -111,7 +98,7 @@ public class FunicoGP extends GeneticProgramming {
 		// hill-climbing algorithm
 
 		// Apply the search method
-		Solution<EquationNode> solution = search.solve(space, goal);
+		Solution<ForestNode> solution = search.solve(space, goal);
 
 		tracer.close();
 

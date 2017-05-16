@@ -8,14 +8,17 @@ import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Forest implements Cloneable {
+public class ForestNode implements Cloneable {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Forest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ForestNode.class);
 
 	private List<EquationNode> trees;
 
-	public Forest() {
+	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
 		trees = new ArrayList<EquationNode>();
+		for (int i = RandomUtils.nextInt(0, maxEquations); i < maxEquations; i++) {
+			trees.add(new EquationNode(expression, null, RandomUtils.nextInt(0, maxNodesByEquation)));
+		}
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class Forest implements Cloneable {
 	 * 
 	 * @param forest
 	 */
-	public Forest(Forest forest) {
+	public ForestNode(ForestNode forest) {
 
 		trees = new ArrayList<EquationNode>(forest.trees.size());
 		for (EquationNode equation : forest.trees) {
