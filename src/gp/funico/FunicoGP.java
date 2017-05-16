@@ -1,18 +1,24 @@
 package gp.funico;
 
-import gp.Example;
 import gp.GeneticProgramming;
-import gp.Node;
-import gp.NodeCrossover;
-import gp.NodeFitness;
-import gp.NodeMutation;
-import gp.NodeSpace;
-import gp.calculator.CalculatorGP;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+
+import co.edu.unal.funico.interpreter.funico.interpreter.ExampleException;
+import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
+import co.edu.unal.funico.interpreter.funico.interpreter.GoalException;
+import co.edu.unal.funico.interpreter.funico.interpreter.ProgramException;
+import co.edu.unal.funico.interpreter.funico.language.LexicalException;
+import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;
 import unalcol.evolution.EAFactory;
@@ -37,8 +43,20 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 
 public class FunicoGP extends GeneticProgramming {
 
-	public static FunicoGP getInstance() {
-		return new FunicoGP();
+	private int maxEquations;
+	private int maxNodesByEquation;
+	private Extractor extractor;
+
+	public static FunicoGP getInstance(int maxEquations, int maxNodesByEquation, Extractor extractor) {
+		FunicoGP funicoGP = new FunicoGP();
+		funicoGP.maxEquations = maxEquations;
+		funicoGP.maxNodesByEquation = maxNodesByEquation;
+		funicoGP.extractor = extractor;
+		return funicoGP;
+	}
+
+	private FunicoGP() {
+
 	}
 
 	@Override

@@ -1,16 +1,9 @@
 package gp.calculator;
 
-import gp.Example;
 import gp.GeneticProgramming;
-import gp.Node;
-import gp.NodeCrossover;
-import gp.NodeFitness;
-import gp.NodeMutation;
-import gp.NodeSpace;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;

@@ -1,10 +1,15 @@
 package gp.run;
 
 import static org.junit.Assert.*;
+
+import java.io.File;
+
 import gp.GeneticProgramming;
 import gp.calculator.CalculatorGP;
+import gp.funico.ExampleReader;
 import gp.funico.FunicoGP;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +42,10 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			GeneticProgramming instance = CalculatorGP.getInstance();
+			File file = FileUtils.getFile("./data/Funico/then-example.txt");
+			ExampleReader reader = new ExampleReader(file);
+			GeneticProgramming instance = FunicoGP.getInstance(reader.getMaxEquations(),
+					reader.getMaxNodesByEquation(), reader.getExtractor());
 			Double best = instance.evolve();
 			assertNotNull(best);
 		} catch (Exception e) {
