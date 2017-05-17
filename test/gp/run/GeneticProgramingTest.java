@@ -44,8 +44,7 @@ public class GeneticProgramingTest {
 		try {
 			File file = FileUtils.getFile("./data/Funico/then-example.txt");
 			ExampleReader reader = new ExampleReader(file);
-			GeneticProgramming instance = FunicoGP.getInstance(reader.getMaxEquations(),
-					reader.getMaxNodesByEquation(), reader.getExtractor());
+			GeneticProgramming instance = FunicoGP.getInstance(reader);
 			Double best = instance.evolve();
 			assertNotNull(best);
 		} catch (Exception e) {

@@ -19,6 +19,7 @@ public class ExampleReader {
 	private int maxEquations;
 	private int maxNodesByEquation;
 	private Extractor extractor;
+	private List<String> examples;
 
 	public ExampleReader(File example) {
 		loadExampleFile(example);
@@ -30,6 +31,7 @@ public class ExampleReader {
 			List<String> lines = FileUtils.readLines(example, StandardCharsets.UTF_8);
 			this.maxEquations = Integer.parseInt(lines.remove(0));
 			this.maxNodesByEquation = Integer.parseInt(lines.remove(0));
+			this.examples = lines;
 			extractor = new Extractor(StringUtils.join(lines, ";"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -60,6 +62,13 @@ public class ExampleReader {
 	 */
 	public Extractor getExtractor() {
 		return extractor;
+	}
+
+	/**
+	 * @return the examples
+	 */
+	public List<String> getExamples() {
+		return examples;
 	}
 
 }

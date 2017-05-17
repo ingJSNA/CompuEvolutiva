@@ -8,6 +8,12 @@ import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import co.edu.unal.funico.interpreter.funico.interpreter.Evaluator;
+import co.edu.unal.funico.interpreter.funico.interpreter.GoalException;
+import co.edu.unal.funico.interpreter.funico.interpreter.ProgramException;
+import co.edu.unal.funico.interpreter.funico.language.LexicalException;
+import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
+
 public class ForestNode implements Cloneable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ForestNode.class);
@@ -16,7 +22,7 @@ public class ForestNode implements Cloneable {
 
 	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
 		trees = new ArrayList<EquationNode>();
-		for (int i = RandomUtils.nextInt(0, maxEquations); i < maxEquations; i++) {
+		for (int i = RandomUtils.nextInt(0, maxEquations - 1); i < maxEquations; i++) {
 			trees.add(new EquationNode(expression, null, RandomUtils.nextInt(0, maxNodesByEquation)));
 		}
 	}
@@ -34,9 +40,20 @@ public class ForestNode implements Cloneable {
 		}
 	}
 
-	// TODO
-	public double evaluate(double x, double y) {
+	public double evaluate(String goal) {
+		try {
+			Evaluator.evalue(getSource(), goal);
+			return 1;
+		} catch (LexicalException | SyntacticalException | ProgramException | GoalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
+	}
+
+	private String getSource() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 
 	/**

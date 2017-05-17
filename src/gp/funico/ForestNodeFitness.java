@@ -12,10 +12,10 @@ class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ForestNodeFitness.class);
 
-	private List<Example> examples;
+	private List<String> examples;
 
-	public ForestNodeFitness(List<Example> examples) {
-		this.examples = new ArrayList<Example>(examples);
+	public ForestNodeFitness(List<String> list) {
+		this.examples = list;
 	}
 
 	@Override
@@ -23,12 +23,12 @@ class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 		LOG.debug("Nodo: {}.", x);
 
 		double diff = 0;
-		for (Example e : examples) {
-			diff += Math.abs(e.getAnswer() - x.evaluate(e.getX(), e.getY()));
+		for (String goal : examples) {
+			diff += x.evaluate(goal);
 		}
 
 		// Calc the fitness
-		double fitness = diff;
+		double fitness = diff / examples.size();
 
 		return fitness;
 	}

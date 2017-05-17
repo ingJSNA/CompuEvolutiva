@@ -30,15 +30,11 @@ import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
 public class FunicoGP extends GeneticProgramming {
 
-	private int maxEquations;
-	private int maxNodesByEquation;
-	private Extractor extractor;
+	private ExampleReader reader;
 
-	public static FunicoGP getInstance(int maxEquations, int maxNodesByEquation, Extractor extractor) {
+	public static FunicoGP getInstance(ExampleReader reader) {
 		FunicoGP funicoGP = new FunicoGP();
-		funicoGP.maxEquations = maxEquations;
-		funicoGP.maxNodesByEquation = maxNodesByEquation;
-		funicoGP.extractor = extractor;
+		funicoGP.reader = reader;
 		return funicoGP;
 	}
 
@@ -50,23 +46,11 @@ public class FunicoGP extends GeneticProgramming {
 	public double evolve() {
 		// Search Space definition
 
-		Space<ForestNode> space = new ForestSpace(new Expression(extractor), maxEquations,
-				maxNodesByEquation);
+		Space<ForestNode> space = new ForestSpace(new Expression(reader.getExtractor()),
+				reader.getMaxEquations(), reader.getMaxNodesByEquation());
 
 		// Optimization Function
-		List<Example> examples = new ArrayList<Example>();
-		examples.add(new Example(5, 4));
-		examples.add(new Example(17, 4));
-		examples.add(new Example(5, 21));
-		examples.add(new Example(55, 4));
-		examples.add(new Example(0, 0));
-		examples.add(new Example(2, 0));
-		examples.add(new Example(-2, 0));
-		examples.add(new Example(-4, 1));
-		examples.add(new Example(1, 1));
-		examples.add(new Example(4, -1));
-
-		OptimizationFunction<ForestNode> function = new ForestNodeFitness(examples);
+		OptimizationFunction<ForestNode> function = new ForestNodeFitness(reader.getExamples());
 
 		// maximizing, remove the parameter false if minimizing
 		Goal<ForestNode, Double> goal = new OptimizationGoal<ForestNode>(function, true);

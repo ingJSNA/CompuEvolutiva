@@ -4,12 +4,12 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_2_2;
 
-class ForestNodeCrossover extends Variation_2_2<ForestNode> {
+public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 
 	@Override
 	public ForestNode[] apply(ForestNode one, ForestNode two) {
-		EquationNode childOne = one.clone(null);
-		EquationNode childTwo = two.clone(null);
+		ForestNode childOne = new ForestNode(one);
+		ForestNode childTwo = new ForestNode(two);
 
 		int c1 = RandomUtils.nextInt(0, childOne.weight());
 		int c2 = RandomUtils.nextInt(0, childTwo.weight());
