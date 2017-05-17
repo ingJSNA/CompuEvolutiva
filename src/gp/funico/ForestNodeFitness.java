@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import unalcol.optimization.OptimizationFunction;
 
-class ForestNodeFitness extends OptimizationFunction<ForestNode> {
+public class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ForestNodeFitness.class);
 

@@ -1,6 +1,6 @@
 package gp.funico;
 
-class Example {
+public class Example {
 
 	private double answer;
 	private double x;

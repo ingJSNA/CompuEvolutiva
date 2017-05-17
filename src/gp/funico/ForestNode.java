@@ -45,8 +45,7 @@ public class ForestNode implements Cloneable {
 			Evaluator.evalue(getSource(), goal);
 			return 1;
 		} catch (LexicalException | SyntacticalException | ProgramException | GoalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("Error al evaluar el programa. Goal: {}", goal, e);
 		}
 		return 0;
 	}

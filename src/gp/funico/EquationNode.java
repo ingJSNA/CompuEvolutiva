@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import util.RandomCollectionsUtils;
 
-class EquationNode {
+public class EquationNode {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EquationNode.class);
 

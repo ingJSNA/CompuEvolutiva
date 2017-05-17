@@ -1,5 +1,8 @@
 package gp.funico;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_2_2;
@@ -8,6 +11,12 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 
 	@Override
 	public ForestNode[] apply(ForestNode one, ForestNode two) {
+		List<ForestNode> children = globalXOver(one, two);
+		children.addAll(SubtreeXOver(one, two));
+		return children.toArray(new ForestNode[children.size()]);
+	}
+
+	private List<ForestNode> SubtreeXOver(ForestNode one, ForestNode two) {
 		ForestNode childOne = new ForestNode(one);
 		ForestNode childTwo = new ForestNode(two);
 
@@ -35,7 +44,11 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 				temp.parent.right = n2;
 			}
 		}
+		return null;
+	}
 
-		return new ForestNode[] { childOne, childTwo };
+	private List<ForestNode> globalXOver(ForestNode one, ForestNode two) {
+		// TODO Auto-generated method stub
+		return new ArrayList<ForestNode>();
 	}
 }

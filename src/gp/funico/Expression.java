@@ -6,7 +6,7 @@ import java.util.Set;
 
 import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
-class Expression {
+public class Expression {
 
 	private final Set<String> variables;
 	private final Set<String> terminals;
