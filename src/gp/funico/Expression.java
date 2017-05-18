@@ -10,6 +10,8 @@ public class Expression {
 
 	public static final String EQUATION_SEPARATOR = "; ";
 
+	public static final String EQUATION_RIGHT_SEPARATOR = " = ";
+
 	private final Set<String> variables;
 	private final Set<String> terminals;
 	private final Set<String> mainFunctors;
@@ -31,8 +33,19 @@ public class Expression {
 		return variablesAndTerminals;
 	}
 
+	public Set<String> getVaribles() {
+		return variables;
+	}
+
 	public Set<String> getFunctions() {
 		return functors.keySet();
+	}
+
+	/**
+	 * @return the terminals
+	 */
+	public Set<String> getTerminals() {
+		return terminals;
 	}
 
 }

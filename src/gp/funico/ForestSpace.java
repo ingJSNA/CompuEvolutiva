@@ -22,8 +22,12 @@ public class ForestSpace extends Space<ForestNode> {
 
 	@Override
 	public boolean feasible(ForestNode x) {
-		// TODO
-		return true;
+		try {
+			x.evaluate("");
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
