@@ -10,7 +10,7 @@ public class Expression {
 
 	public static final String EQUATION_SEPARATOR = "; ";
 
-	public static final String EQUATION_RIGHT_SEPARATOR = " = ";
+	public static final String EQUATION_RIGHT_SEPARATOR = "=";
 
 	private final Set<String> variables;
 	private final Set<String> terminals;

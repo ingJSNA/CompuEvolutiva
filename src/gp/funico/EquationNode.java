@@ -39,7 +39,7 @@ public class EquationNode {
 		}
 	}
 
-	private EquationNode(Expression expression, EquationNode parent, String oper) {
+	public EquationNode(Expression expression, EquationNode parent, String oper) {
 		this.parent = parent;
 		this.oper = oper;
 		this.expression = expression;

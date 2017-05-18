@@ -107,22 +107,33 @@ public class ForestNode implements Cloneable {
 	 * Repair this object
 	 */
 	public void repair() {
-		// All variables in the right side must be in the left side
+
 		for (int i = 0; i < trees.size(); i += 2) {
 			EquationNode left = trees.get(i);
 			EquationNode right = trees.get(i + 1);
 
 			Set<String> leftVariables = new HashSet<String>();
+			Set<String> leftFunctions = new HashSet<String>();
 
 			// Left side
 			for (int e = 0; e < left.weight(); e++) {
 				EquationNode equation = left.get(e);
-				if (expression == null) {
-					System.out.println("null");
-				}
+
 				if (expression.getVaribles().contains(equation.oper)) {
 					leftVariables.add(equation.oper);
+				} else if (expression.getFunctions().contains(equation.oper)) {
+					leftFunctions.add(equation.oper);
 				}
+			}
+
+			// Must be at least one function on the left side
+			if (leftFunctions.isEmpty()) {
+				String oper = RandomCollectionsUtils.getItem(expression.getFunctions());
+				EquationNode newRoot = new EquationNode(expression, null, oper);
+				newRoot.children.add(left);
+				left.parent = newRoot;
+				this.setTree(i, newRoot);
+				left = newRoot;
 			}
 
 			// Right side
@@ -131,12 +142,15 @@ public class ForestNode implements Cloneable {
 				if (expression.getVaribles().contains(equation.oper)) {
 					if (leftVariables.isEmpty()) {
 						equation.oper = RandomCollectionsUtils.getItem(expression.getTerminals());
-					} else if (!leftVariables.contains(equation.oper)) {
+					}
+					// All variables in the right side must be in the left side
+					else if (!leftVariables.contains(equation.oper)) {
 						equation.oper = RandomCollectionsUtils.getItem(leftVariables);
 					}
 				}
 			}
-
+			left.repair();
+			right.repair();
 		}
 
 	}
