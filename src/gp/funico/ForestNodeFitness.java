@@ -24,7 +24,7 @@ public class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 
 		double diff = 0;
 		for (String goal : examples) {
-			diff += examples.size() - x.evaluate(goal);
+			diff += Math.abs(x.evaluate(goal));
 		}
 
 		// Calc the fitness

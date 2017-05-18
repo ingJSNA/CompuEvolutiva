@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +54,18 @@ public class ForestNode implements Cloneable {
 
 	public double evaluate(String goal) {
 		try {
-			Evaluator.evalue(getSource(), goal);
+			String[] sides = StringUtils.split(goal, "=");
+			String value = Evaluator.evalue(getSource(), sides[0]);
+			if (value.equals(sides[1].trim())) {
+				return 0;
+			}
 			return 1;
 		} catch (GoalException e) {
 			LOG.debug("No se cumple el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			return 2;
 		} catch (SyntacticalException e) {
 			LOG.warn("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return 4;
+			return Integer.MAX_VALUE;
 		} catch (LexicalException | ProgramException e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);

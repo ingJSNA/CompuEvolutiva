@@ -123,7 +123,14 @@ public class EquationNode {
 	 * Repair this node
 	 */
 	public void repair() {
+		while (children.size() < operArity) {
+			String leafOper = RandomCollectionsUtils.getItem(expression.getVariblesAndTerminals());
+			EquationNode leaf = new EquationNode(expression, this, leafOper);
+			children.add(leaf);
+
+		}
 		for (EquationNode equation : children) {
+
 			equation.repair();
 		}
 	}
