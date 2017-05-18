@@ -20,11 +20,11 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 		ForestNode childOne = new ForestNode(one);
 		ForestNode childTwo = new ForestNode(two);
 
-		int c1 = RandomUtils.nextInt(0, childOne.weight());
-		int c2 = RandomUtils.nextInt(0, childTwo.weight());
+		int c1 = RandomUtils.nextInt(0, childOne.equationsCount());
+		int c2 = RandomUtils.nextInt(0, childTwo.equationsCount());
 
-		EquationNode n1 = childOne.get(c1);
-		EquationNode n2 = childTwo.get(c2);
+		EquationNode n1 = childOne.getEquation(c1);
+		EquationNode n2 = childTwo.getEquation(c2);
 		EquationNode temp = n1.clone(n1.parent);
 
 		n1.parent = n2.parent;

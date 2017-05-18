@@ -1,5 +1,7 @@
 package gp.funico;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,19 +113,17 @@ public class EquationNode {
 
 	@Override
 	public String toString() {
-		String string = "";
-		if (this.isLeaf()) {
-			string = this.oper;
-		} else if ("*".equals(this.oper) && ("0".equals(left.oper) || "0".equals(right.oper))) {
-			string = "0";
-		}
+		return getSource();
+	}
 
-		else if (GenericValidator.isDouble(left.oper) && GenericValidator.isDouble(right.oper)) {
-			string = String.valueOf(this.evaluate(0, 0));
-		} else {
-			string += "(" + left + " " + this.oper + " " + right + ")";
+	public String getSource() {
+		String string = "";
+		if (expression.getVariblesAndTerminals().contains(this.oper)) {
+			return this.oper;
+		} else if (expression.getFunctions().contains(this.oper)) {
+			return this.oper + "(" + left.getSource() + ", " + right.getSource() + ")";
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +23,16 @@ public class ForestNode implements Cloneable {
 
 	private List<EquationNode> trees;
 
+	private Expression expression;
+
 	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
+		this.expression = expression;
+
 		trees = new ArrayList<EquationNode>();
+
 		for (int i = RandomUtils.nextInt(0, maxEquations - 1); i < maxEquations; i++) {
-			trees.add(new EquationNode(expression, null, RandomUtils.nextInt(0, maxNodesByEquation)));
+			int hight = RandomUtils.nextInt(0, maxNodesByEquation);
+			trees.add(new EquationNode(expression, null, hight));
 		}
 	}
 
@@ -45,14 +54,23 @@ public class ForestNode implements Cloneable {
 			Evaluator.evalue(getSource(), goal);
 			return 1;
 		} catch (LexicalException | SyntacticalException | ProgramException | GoalException e) {
-			LOG.error("Error al evaluar el programa. Goal: {}", goal, e);
+			LOG.error("Error al evaluar el programa. Forest Node: {}. Goal: {}", this, goal, e);
+			throw new RuntimeException();
 		}
-		return 0;
 	}
 
+	/**
+	 * Build the source of the program
+	 * 
+	 * @return
+	 */
 	private String getSource() {
-		// TODO Auto-generated method stub
-		return "";
+		StringBuilder sb = new StringBuilder();
+		for (EquationNode equation : trees) {
+			sb.append(equation.getSource());
+			sb.append(Expression.EQUATION_SEPARATOR);
+		}
+		return sb.toString().trim();
 	}
 
 	/**
@@ -70,8 +88,7 @@ public class ForestNode implements Cloneable {
 
 	@Override
 	public String toString() {
-		String string = super.toString();
-		return string;
+		return getSource();
 	}
 
 	/**

@@ -8,6 +8,8 @@ import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
 public class Expression {
 
+	public static final String EQUATION_SEPARATOR = "; ";
+
 	private final Set<String> variables;
 	private final Set<String> terminals;
 	private final Set<String> mainFunctors;
