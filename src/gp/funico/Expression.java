@@ -42,6 +42,20 @@ public class Expression {
 	}
 
 	/**
+	 * Return the arity for the given function.
+	 * 
+	 * @param function
+	 * @return
+	 */
+	public int getFunctionArity(String function) {
+		if (functors.containsKey(function)) {
+			return functors.get(function);
+		} else {
+			return 0;
+		}
+	}
+
+	/**
 	 * @return the terminals
 	 */
 	public Set<String> getTerminals() {

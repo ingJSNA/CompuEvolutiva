@@ -25,26 +25,18 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 
 		EquationNode n1 = childOne.getEquation(c1);
 		EquationNode n2 = childTwo.getEquation(c2);
-		EquationNode temp = n1.clone(n1.parent);
+		EquationNode p1 = n1.parent; // TODO NULL PARENT
+		EquationNode p2 = n2.parent;
 
-		n1.parent = n2.parent;
-		if (n2.parent != null) {
-			if (n2.equals(n2.parent.left)) {
-				n2.parent.left = n1;
-			} else if (n2.equals(n2.parent.right)) {
-				n2.parent.right = n1;
-			}
-		}
+		p1.replaceChild(n1, n2);
 
-		n2.parent = temp.parent;
-		if (temp.parent != null) {
-			if (temp.equals(temp.parent.left)) {
-				temp.parent.left = n2;
-			} else if (temp.equals(temp.parent.right)) {
-				temp.parent.right = n2;
-			}
-		}
-		return null;
+		p2.replaceChild(n2, n1);
+
+		ArrayList<ForestNode> offspring = new ArrayList<ForestNode>();
+		offspring.add(childOne);
+		offspring.add(childTwo);
+
+		return offspring;
 	}
 
 	private List<ForestNode> globalXOver(ForestNode one, ForestNode two) {
