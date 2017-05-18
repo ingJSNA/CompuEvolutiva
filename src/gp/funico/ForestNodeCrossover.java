@@ -20,17 +20,25 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 		ForestNode childOne = new ForestNode(one);
 		ForestNode childTwo = new ForestNode(two);
 
-		int c1 = RandomUtils.nextInt(0, childOne.equationsCount());
-		int c2 = RandomUtils.nextInt(0, childTwo.equationsCount());
+		int c1 = RandomUtils.nextInt(0, childOne.treesCount());
+		int c2 = RandomUtils.nextInt(0, childTwo.treesCount());
 
 		EquationNode n1 = childOne.getEquation(c1);
 		EquationNode n2 = childTwo.getEquation(c2);
 		EquationNode p1 = n1.parent; // TODO NULL PARENT
 		EquationNode p2 = n2.parent;
 
-		p1.replaceChild(n1, n2);
+		if (p1 == null) {
+			childOne.setTree(c1, n2);
+		} else {
+			p1.replaceChild(n1, n2);
+		}
 
-		p2.replaceChild(n2, n1);
+		if (p2 == null) {
+			childOne.setTree(c2, n1);
+		} else {
+			p2.replaceChild(n2, n1);
+		}
 
 		ArrayList<ForestNode> offspring = new ArrayList<ForestNode>();
 		offspring.add(childOne);

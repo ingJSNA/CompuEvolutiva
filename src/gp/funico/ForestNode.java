@@ -44,7 +44,7 @@ public class ForestNode implements Cloneable {
 	 * @param forest
 	 */
 	public ForestNode(ForestNode forest) {
-
+		this.expression = forest.expression;
 		trees = new ArrayList<EquationNode>(forest.trees.size());
 		for (EquationNode equation : forest.trees) {
 			trees.add(equation.clone(null));
@@ -90,7 +90,7 @@ public class ForestNode implements Cloneable {
 	 * 
 	 * @return
 	 */
-	public int equationsCount() {
+	public int treesCount() {
 		return trees.size();
 	}
 
@@ -117,6 +117,9 @@ public class ForestNode implements Cloneable {
 			// Left side
 			for (int e = 0; e < left.weight(); e++) {
 				EquationNode equation = left.get(e);
+				if (expression == null) {
+					System.out.println("null");
+				}
 				if (expression.getVaribles().contains(equation.oper)) {
 					leftVariables.add(equation.oper);
 				}
@@ -135,6 +138,19 @@ public class ForestNode implements Cloneable {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Set the tree in the given index, removing the current one.
+	 * 
+	 * @param index
+	 * @param tree
+	 */
+	public void setTree(int index, EquationNode tree) {
+		trees.remove(index);
+		trees.add(index, tree);
+		tree.parent = null;
 
 	}
 }
