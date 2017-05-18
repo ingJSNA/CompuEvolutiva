@@ -1,10 +1,6 @@
 package gp.funico;
 
 import gp.GeneticProgramming;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;
 import unalcol.evolution.EAFactory;
@@ -26,7 +22,6 @@ import unalcol.tracer.FileTracer;
 import unalcol.tracer.Tracer;
 import unalcol.types.collection.bitarray.BitArray;
 import unalcol.types.real.array.DoubleArrayPlainWrite;
-import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
 
 public class FunicoGP extends GeneticProgramming {
 

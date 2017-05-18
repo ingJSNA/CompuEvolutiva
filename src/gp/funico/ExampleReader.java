@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import co.edu.unal.funico.interpreter.funico.interpreter.ExampleException;
 import co.edu.unal.funico.interpreter.funico.interpreter.Extractor;
@@ -15,6 +17,8 @@ import co.edu.unal.funico.interpreter.funico.language.LexicalException;
 import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
 
 public class ExampleReader {
+
+	private static final Logger LOG = LoggerFactory.getLogger(ExampleReader.class);
 
 	private int maxEquations;
 	private int maxNodesByEquation;
@@ -27,18 +31,26 @@ public class ExampleReader {
 
 	private void loadExampleFile(File example) {
 		Validate.isTrue(example.exists());
+		String join = "";
 		try {
+			// Read file
 			List<String> lines = FileUtils.readLines(example, StandardCharsets.UTF_8);
+
+			// Save values
 			this.maxEquations = Integer.parseInt(lines.remove(0));
 			this.maxNodesByEquation = Integer.parseInt(lines.remove(0));
 			this.examples = lines;
-			extractor = new Extractor(StringUtils.join(lines, ";"));
+
+			// Extract information from examples
+			join = StringUtils.join(lines, ";");
+			extractor = new Extractor(join);
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("Error al leer el archivo: {}", example, e);
+			throw new RuntimeException(e);
 		} catch (ExampleException | LexicalException | SyntacticalException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
+			LOG.error("No se pudo extraer la información de: {}", join, ex);
+			throw new RuntimeException(ex);
 		}
 
 	}

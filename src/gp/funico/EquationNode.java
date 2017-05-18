@@ -1,8 +1,5 @@
 package gp.funico;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,27 +36,18 @@ public class EquationNode {
 	}
 
 	/**
-	 * Copy constructor
-	 * 
-	 * @param other
-	 */
-	public EquationNode(EquationNode other) {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
 	 * Clone the current node with its children, and set the given parent.
 	 * 
 	 * @param parent
 	 * @return
 	 */
 	public EquationNode clone(EquationNode parent) {
-		EquationNode n = new EquationNode(parent, oper);
-		if (!isLeaf()) {
-			n.left = left.clone(n);
-			n.right = right.clone(n);
-		}
-		return n;
+		EquationNode clone = new EquationNode(parent, oper);
+		clone.expression = expression;
+
+		clone.left = left.clone(clone);
+		clone.right = right.clone(clone);
+		return clone;
 	}
 
 	private boolean isLeaf() {

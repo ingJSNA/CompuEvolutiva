@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +19,7 @@ public class ForestNode implements Cloneable {
 
 	private List<EquationNode> trees;
 
-	private Expression expression;
-
 	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
-		this.expression = expression;
 
 		trees = new ArrayList<EquationNode>();
 
@@ -45,7 +38,7 @@ public class ForestNode implements Cloneable {
 
 		trees = new ArrayList<EquationNode>(forest.trees.size());
 		for (EquationNode equation : forest.trees) {
-			trees.add(new EquationNode(equation));
+			trees.add(equation.clone(null));
 		}
 	}
 
