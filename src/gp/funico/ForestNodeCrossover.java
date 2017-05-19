@@ -16,6 +16,13 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 		return children.toArray(new ForestNode[children.size()]);
 	}
 
+	/**
+	 * Make a crossover of sub trees.
+	 * 
+	 * @param one
+	 * @param two
+	 * @return
+	 */
 	private List<ForestNode> SubtreeXOver(ForestNode one, ForestNode two) {
 		ForestNode childOne = new ForestNode(one);
 		ForestNode childTwo = new ForestNode(two);
@@ -25,7 +32,7 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 
 		EquationNode n1 = childOne.getEquation(c1);
 		EquationNode n2 = childTwo.getEquation(c2);
-		EquationNode p1 = n1.parent; // TODO NULL PARENT
+		EquationNode p1 = n1.parent;
 		EquationNode p2 = n2.parent;
 
 		if (p1 == null) {
@@ -35,7 +42,7 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 		}
 
 		if (p2 == null) {
-			childOne.setTree(c2, n1);
+			childTwo.setTree(c2, n1);
 		} else {
 			p2.replaceChild(n2, n1);
 		}

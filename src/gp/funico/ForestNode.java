@@ -25,15 +25,19 @@ public class ForestNode implements Cloneable {
 
 	private Expression expression;
 
+	private int maxNodesByEquation;
+
+	private int maxEquations;
+
 	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
 		this.expression = expression;
+		this.maxNodesByEquation = maxNodesByEquation;
+		this.maxEquations = maxEquations;
 
 		trees = new ArrayList<EquationNode>();
 
 		for (int i = RandomUtils.nextInt(0, maxEquations - 1); i < maxEquations; i++) {
-			int hight = RandomUtils.nextInt(0, maxNodesByEquation);
-			trees.add(new EquationNode(expression, null, hight));
-			trees.add(new EquationNode(expression, null, hight));
+			addEquation();
 		}
 
 		this.repair();
@@ -66,7 +70,7 @@ public class ForestNode implements Cloneable {
 		} catch (SyntacticalException e) {
 			LOG.warn("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			return Integer.MAX_VALUE;
-		} catch (LexicalException | ProgramException e) {
+		} catch (Exception e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		}
@@ -164,12 +168,36 @@ public class ForestNode implements Cloneable {
 	 * Set the tree in the given index, removing the current one.
 	 * 
 	 * @param index
-	 * @param tree
+	 * @param node
 	 */
-	public void setTree(int index, EquationNode tree) {
+	public void setTree(int index, EquationNode node) {
 		trees.remove(index);
-		trees.add(index, tree);
-		tree.parent = null;
+		trees.add(index, node);
+		node.parent = null;
 
+	}
+
+	/**
+	 * Add randomly an equation to the forest;
+	 */
+	public void addEquation() {
+		if (trees.size() <= maxEquations) {
+			int hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
+			trees.add(new EquationNode(expression, null, hight));
+			hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
+			trees.add(new EquationNode(expression, null, hight));
+		}
+
+	}
+
+	/**
+	 * Remove randomly an equation from the forest;
+	 */
+	public void removeEquation() {
+		if (trees.size() >= 4) {
+			int index = RandomUtils.nextInt(0, trees.size() / 2);
+			trees.remove(index);
+			trees.remove(index);
+		}
 	}
 }

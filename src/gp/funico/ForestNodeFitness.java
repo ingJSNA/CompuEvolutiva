@@ -30,6 +30,10 @@ public class ForestNodeFitness extends OptimizationFunction<ForestNode> {
 		// Calc the fitness
 		double fitness = diff / examples.size();
 
+		if (fitness == 0) {
+			System.out.println("0");
+		}
+
 		return fitness;
 	}
 
