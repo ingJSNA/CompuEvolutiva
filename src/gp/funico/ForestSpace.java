@@ -2,7 +2,7 @@ package gp.funico;
 
 import unalcol.search.space.Space;
 
-public class ForestSpace extends Space<ForestNode> {
+public class ForestSpace extends Space<Forest> {
 
 	private Expression expression;
 	private int maxEquations;
@@ -21,7 +21,7 @@ public class ForestSpace extends Space<ForestNode> {
 	}
 
 	@Override
-	public boolean feasible(ForestNode x) {
+	public boolean feasible(Forest x) {
 		try {
 			x.evaluate("");
 			return true;
@@ -31,19 +31,19 @@ public class ForestSpace extends Space<ForestNode> {
 	}
 
 	@Override
-	public double feasibility(ForestNode x) {
+	public double feasibility(Forest x) {
 		return feasible(x) ? 1 : 0;
 	}
 
 	@Override
-	public ForestNode repair(ForestNode x) {
+	public Forest repair(Forest x) {
 		x.repair();
 		return x;
 	}
 
 	@Override
-	public ForestNode pick() {
-		return new ForestNode(maxEquations, maxNodesByEquation, expression);
+	public Forest pick() {
+		return new Forest(maxEquations, maxNodesByEquation, expression);
 	}
 
 }

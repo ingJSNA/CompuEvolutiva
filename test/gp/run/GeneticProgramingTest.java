@@ -42,17 +42,24 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			File file = FileUtils.getFile("./data/Funico/then-example.txt");
-			ExampleReader reader = new ExampleReader(file);
-			GeneticProgramming instance = FunicoGP.getInstance(reader);
+			String[] examples = new String[] { "./data/Funico/then-example.txt",
+					"./data/Funico/geq-example.txt" };
+			GeneticProgramming instance = buildFunico(examples[1]);
 			Double best = instance.evolve();
-			assertNotNull(best);
+			assertTrue(best == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail("Exception");
 		}
 
+	}
+
+	private GeneticProgramming buildFunico(String filepath) {
+		File file = FileUtils.getFile(filepath);
+		ExampleReader reader = new ExampleReader(file);
+		GeneticProgramming instance = FunicoGP.getInstance(reader);
+		return instance;
 	}
 
 }

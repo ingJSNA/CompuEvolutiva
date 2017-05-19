@@ -13,13 +13,11 @@ import org.slf4j.LoggerFactory;
 import util.RandomCollectionsUtils;
 import co.edu.unal.funico.interpreter.funico.interpreter.Evaluator;
 import co.edu.unal.funico.interpreter.funico.interpreter.GoalException;
-import co.edu.unal.funico.interpreter.funico.interpreter.ProgramException;
-import co.edu.unal.funico.interpreter.funico.language.LexicalException;
 import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
 
-public class ForestNode implements Cloneable {
+public class Forest implements Cloneable {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ForestNode.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Forest.class);
 
 	private List<EquationNode> trees;
 
@@ -29,7 +27,7 @@ public class ForestNode implements Cloneable {
 
 	private int maxEquations;
 
-	public ForestNode(int maxEquations, int maxNodesByEquation, Expression expression) {
+	public Forest(int maxEquations, int maxNodesByEquation, Expression expression) {
 		this.expression = expression;
 		this.maxNodesByEquation = maxNodesByEquation;
 		this.maxEquations = maxEquations;
@@ -48,8 +46,11 @@ public class ForestNode implements Cloneable {
 	 * 
 	 * @param forest
 	 */
-	public ForestNode(ForestNode forest) {
+	public Forest(Forest forest) {
 		this.expression = forest.expression;
+		this.maxNodesByEquation = forest.maxNodesByEquation;
+		this.maxEquations = forest.maxEquations;
+
 		trees = new ArrayList<EquationNode>(forest.trees.size());
 		for (EquationNode equation : forest.trees) {
 			trees.add(equation.clone(null));
@@ -66,9 +67,9 @@ public class ForestNode implements Cloneable {
 			return 1;
 		} catch (GoalException e) {
 			LOG.debug("No se cumple el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return 2;
+			return Integer.MAX_VALUE;
 		} catch (SyntacticalException e) {
-			LOG.warn("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			return Integer.MAX_VALUE;
 		} catch (Exception e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
@@ -181,7 +182,7 @@ public class ForestNode implements Cloneable {
 	 * Add randomly an equation to the forest;
 	 */
 	public void addEquation() {
-		if (trees.size() <= maxEquations) {
+		if (trees.size() / 2 < maxEquations) {
 			int hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
 			trees.add(new EquationNode(expression, null, hight));
 			hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
@@ -194,7 +195,7 @@ public class ForestNode implements Cloneable {
 	 * Remove randomly an equation from the forest;
 	 */
 	public void removeEquation() {
-		if (trees.size() >= 4) {
+		if (trees.size() > 2) {
 			int index = RandomUtils.nextInt(0, trees.size() / 2);
 			trees.remove(index);
 			trees.remove(index);

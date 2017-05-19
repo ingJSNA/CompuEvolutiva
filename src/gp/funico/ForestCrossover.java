@@ -7,13 +7,13 @@ import org.apache.commons.lang3.RandomUtils;
 
 import unalcol.search.variation.Variation_2_2;
 
-public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
+public class ForestCrossover extends Variation_2_2<Forest> {
 
 	@Override
-	public ForestNode[] apply(ForestNode one, ForestNode two) {
-		List<ForestNode> children = globalXOver(one, two);
+	public Forest[] apply(Forest one, Forest two) {
+		List<Forest> children = globalXOver(one, two);
 		children.addAll(SubtreeXOver(one, two));
-		return children.toArray(new ForestNode[children.size()]);
+		return children.toArray(new Forest[children.size()]);
 	}
 
 	/**
@@ -23,9 +23,9 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 	 * @param two
 	 * @return
 	 */
-	private List<ForestNode> SubtreeXOver(ForestNode one, ForestNode two) {
-		ForestNode childOne = new ForestNode(one);
-		ForestNode childTwo = new ForestNode(two);
+	private List<Forest> SubtreeXOver(Forest one, Forest two) {
+		Forest childOne = new Forest(one);
+		Forest childTwo = new Forest(two);
 
 		int c1 = RandomUtils.nextInt(0, childOne.treesCount());
 		int c2 = RandomUtils.nextInt(0, childTwo.treesCount());
@@ -47,15 +47,15 @@ public class ForestNodeCrossover extends Variation_2_2<ForestNode> {
 			p2.replaceChild(n2, n1);
 		}
 
-		ArrayList<ForestNode> offspring = new ArrayList<ForestNode>();
+		ArrayList<Forest> offspring = new ArrayList<Forest>();
 		offspring.add(childOne);
 		offspring.add(childTwo);
 
 		return offspring;
 	}
 
-	private List<ForestNode> globalXOver(ForestNode one, ForestNode two) {
+	private List<Forest> globalXOver(Forest one, Forest two) {
 		// TODO Auto-generated method stub
-		return new ArrayList<ForestNode>();
+		return new ArrayList<Forest>();
 	}
 }
