@@ -45,7 +45,7 @@ public class FunicoGP extends GeneticProgramming {
 				reader.getMaxEquations(), reader.getMaxNodesByEquation());
 
 		// Optimization Function
-		OptimizationFunction<Forest> function = new ForestFitness(reader.getExamples());
+		OptimizationFunction<Forest> function = new ForestFitness(reader);
 
 		// maximizing, remove the parameter false if minimizing
 		Goal<Forest, Double> goal = new OptimizationGoal<Forest>(function, true);

@@ -18,6 +18,12 @@ public class ForestMutation extends Variation_1_1<Forest> {
 		}
 	}
 
+	/**
+	 * Change the size of the forest, adding or removing a tree
+	 * 
+	 * @param gen
+	 * @return
+	 */
 	private Forest changeSizeMutation(Forest gen) {
 		if (RandomUtils.nextBoolean()) {
 			gen.addEquation();

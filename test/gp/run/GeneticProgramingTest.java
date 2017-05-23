@@ -42,6 +42,23 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
+			FunicoFile example = FunicoFile.then;
+			GeneticProgramming instance = buildFunico(example.getFilePath());
+			Double best = instance.evolve();
+			assertTrue(best >= 0);
+			assertTrue(best <= example.getBestFitness());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("Exception");
+		}
+
+	}
+
+	@Test
+	public final void testAllFunico() {
+		try {
 			for (FunicoFile example : FunicoFile.values()) {
 				GeneticProgramming instance = buildFunico(example.getFilePath());
 				Double best = instance.evolve();

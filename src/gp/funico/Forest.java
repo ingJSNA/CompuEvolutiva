@@ -182,12 +182,10 @@ public class Forest implements Cloneable {
 	 * Add randomly an equation to the forest;
 	 */
 	public void addEquation() {
-		if (trees.size() / 2 < maxEquations) {
-			int hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
-			trees.add(new EquationNode(expression, null, hight));
-			hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
-			trees.add(new EquationNode(expression, null, hight));
-		}
+		int hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
+		trees.add(new EquationNode(expression, null, hight));
+		hight = RandomUtils.nextInt(0, maxNodesByEquation / 2);
+		trees.add(new EquationNode(expression, null, hight));
 
 	}
 
@@ -195,10 +193,14 @@ public class Forest implements Cloneable {
 	 * Remove randomly an equation from the forest;
 	 */
 	public void removeEquation() {
-		if (trees.size() > 2) {
+		if (this.equationCount() > 2) {
 			int index = RandomUtils.nextInt(0, trees.size() / 2);
 			trees.remove(index);
 			trees.remove(index);
 		}
+	}
+
+	public int equationCount() {
+		return this.treesCount() / 2;
 	}
 }

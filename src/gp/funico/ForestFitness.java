@@ -11,22 +11,29 @@ public class ForestFitness extends OptimizationFunction<Forest> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ForestFitness.class);
 
-	private List<String> examples;
+	private ExampleReader reader;
 
-	public ForestFitness(List<String> list) {
-		this.examples = list;
+	public ForestFitness(ExampleReader reader) {
+		this.reader = reader;
 	}
 
 	@Override
 	public Double apply(Forest x) {
 
 		double diff = 0;
+		List<String> examples = reader.getExamples();
 		for (String goal : examples) {
 			diff += Math.abs(x.evaluate(goal));
 		}
 
 		// Calc the fitness
 		double fitness = diff / examples.size();
+
+		double maxEquationsfitness = Math.abs((double) x.equationCount()
+				- (double) reader.getMaxEquations())
+				/ (double) reader.getMaxEquations();
+
+		fitness = 0.8 * fitness + 0.2 * maxEquationsfitness;
 
 		LOG.info("Nodo: {}. Fitness: {}", x, fitness);
 		return fitness;
