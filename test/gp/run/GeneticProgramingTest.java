@@ -42,7 +42,7 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			FunicoFile example = FunicoFile.then;
+			FunicoFile example = FunicoFile.geq;
 			GeneticProgramming instance = buildFunico(example.getFilePath());
 			Double best = instance.evolve();
 			assertTrue(best >= 0);

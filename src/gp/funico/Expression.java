@@ -1,5 +1,7 @@
 package gp.funico;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -12,11 +14,20 @@ public class Expression {
 
 	public static final String EQUATION_RIGHT_SEPARATOR = "=";
 
+	private static final Map<String, Integer> functionsFunico;
+
+	static {
+		functionsFunico = new HashMap<String, Integer>();
+		functionsFunico.put("s", 1);
+	}
+
 	private final Set<String> variables;
 	private final Set<String> terminals;
 	private final Set<String> mainFunctors;
 	private final Map<String, Integer> functors;
 	private final Set<String> variablesAndTerminals;
+
+	private Map<String, Integer> functions;
 
 	public Expression(Extractor extractor) {
 		this.mainFunctors = extractor.getTableMainFunctors();
@@ -26,6 +37,11 @@ public class Expression {
 
 		variablesAndTerminals = new HashSet<String>(variables);
 		variablesAndTerminals.addAll(terminals);
+
+		this.functions = new HashMap<String, Integer>(functionsFunico);
+
+		// Put each of the elements of functors in functions
+		functors.forEach(functions::putIfAbsent);
 
 	}
 
@@ -38,7 +54,7 @@ public class Expression {
 	}
 
 	public Set<String> getFunctions() {
-		return functors.keySet();
+		return functions.keySet();
 	}
 
 	/**
@@ -48,8 +64,8 @@ public class Expression {
 	 * @return
 	 */
 	public int getFunctionArity(String function) {
-		if (functors.containsKey(function)) {
-			return functors.get(function);
+		if (functions.containsKey(function)) {
+			return functions.get(function);
 		} else {
 			return 0;
 		}

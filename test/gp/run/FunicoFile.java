@@ -1,8 +1,8 @@
 package gp.run;
 
 enum FunicoFile {
-	then("then-example.txt", 0.25),
-	geq("geq-example.txt", 0.66);
+	then("then-example.txt", 0.2),
+	geq("geq-example.txt", 0.34);
 
 	private final String FOLDER = "./data/Funico/";
 
