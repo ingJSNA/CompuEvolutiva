@@ -30,8 +30,8 @@ public class ForestCrossover extends Variation_2_2<Forest> {
 		int c1 = RandomUtils.nextInt(0, childOne.treesCount());
 		int c2 = RandomUtils.nextInt(0, childTwo.treesCount());
 
-		EquationNode n1 = childOne.getEquation(c1);
-		EquationNode n2 = childTwo.getEquation(c2);
+		EquationNode n1 = childOne.getTree(c1);
+		EquationNode n2 = childTwo.getTree(c2);
 		EquationNode p1 = n1.parent;
 		EquationNode p2 = n2.parent;
 

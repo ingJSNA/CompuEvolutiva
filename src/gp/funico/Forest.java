@@ -104,7 +104,7 @@ public class Forest implements Cloneable {
 		return trees.size();
 	}
 
-	public EquationNode getEquation(int index) {
+	public EquationNode getTree(int index) {
 		return trees.get(index);
 	}
 
@@ -202,5 +202,15 @@ public class Forest implements Cloneable {
 
 	public int equationCount() {
 		return this.treesCount() / 2;
+	}
+
+	public int maxEquationTerms() {
+		int max = 0;
+		for (int i = 0; i < trees.size(); i += 2) {
+			EquationNode left = trees.get(i);
+			EquationNode right = trees.get(i + 1);
+			max = Math.max(max, left.weight() + 1 + right.weight());
+		}
+		return max;
 	}
 }
