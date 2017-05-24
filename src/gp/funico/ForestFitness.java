@@ -29,15 +29,24 @@ public class ForestFitness extends OptimizationFunction<Forest> {
 		// Calc the fitness
 		double fitness = diff / examples.size();
 
-		double maxEquationsfitness = Math.abs((double) x.equationCount()
-				- (double) reader.getMaxEquations())
-				/ (double) reader.getMaxEquations();
+		double maxEquationsfitness = 0;
+		double equationCount = (double) x.equationCount();
+		double maxEquations = (double) reader.getMaxEquations();
 
-		double maxEquationTermsfitness = Math.abs((double) x.maxEquationTerms()
-				- (double) reader.getMaxNodesByEquation())
-				/ (double) reader.getMaxNodesByEquation();
+		if (x.equationCount() > maxEquations) {
+			maxEquationsfitness = Math.abs(equationCount - maxEquations) / maxEquations;
+		}
 
-		fitness = 0.8 * fitness + 0.1 * maxEquationsfitness + 0.1 * maxEquationTermsfitness;
+		double maxEquationTerms = (double) x.maxEquationTerms();
+		double maxNodesByEquation = (double) reader.getMaxNodesByEquation();
+		double maxEquationTermsfitness = 0;
+
+		if (maxEquationTerms > maxNodesByEquation) {
+			maxEquationTermsfitness = Math.abs(maxEquationTerms - maxNodesByEquation)
+					/ maxNodesByEquation;
+		}
+
+		fitness = 0.8 * fitness + 0.2 * (maxEquationsfitness + maxEquationTermsfitness);
 
 		LOG.info("Nodo: {}. Fitness: {}", x, fitness);
 		return fitness;

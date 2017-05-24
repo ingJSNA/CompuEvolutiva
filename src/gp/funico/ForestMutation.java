@@ -33,8 +33,27 @@ public class ForestMutation extends Variation_1_1<Forest> {
 		return gen;
 	}
 
+	/**
+	 * Change a random node of the given program.
+	 * 
+	 * @param gen
+	 * @return
+	 */
 	private Forest mutationGP(Forest gen) {
-		// TODO
+		int e = RandomUtils.nextInt(0, gen.treesCount());
+
+		EquationNode original = gen.getTree(e);
+		int h = RandomUtils.nextInt(0, gen.getMaxNodesByEquation() / 2);
+		EquationNode n1 = new EquationNode(gen.getExpression(), null, h);
+
+		EquationNode p1 = original.parent;
+
+		if (p1 == null) {
+			gen.setTree(e, n1);
+		} else {
+			p1.replaceChild(original, n1);
+		}
+
 		return gen;
 	}
 

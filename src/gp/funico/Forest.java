@@ -213,4 +213,25 @@ public class Forest implements Cloneable {
 		}
 		return max;
 	}
+
+	/**
+	 * @return the expression
+	 */
+	public Expression getExpression() {
+		return expression;
+	}
+
+	/**
+	 * @return the maxNodesByEquation
+	 */
+	public int getMaxNodesByEquation() {
+		return maxNodesByEquation;
+	}
+
+	/**
+	 * @return the maxEquations
+	 */
+	public int getMaxEquations() {
+		return maxEquations;
+	}
 }
