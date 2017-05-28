@@ -60,6 +60,7 @@ public class Forest implements Cloneable {
 	public double evaluate(String goal) {
 		try {
 			String[] sides = StringUtils.split(goal, "=");
+			LOG.info("Evaluate source: {}", getSource());
 			String value = Evaluator.evalue(getSource(), sides[0]);
 			if (value.equals(sides[1].trim())) {
 				return 0;

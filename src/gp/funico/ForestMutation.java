@@ -43,14 +43,18 @@ public class ForestMutation extends Variation_1_1<Forest> {
 		int e = RandomUtils.nextInt(0, gen.treesCount());
 
 		EquationNode original = gen.getTree(e);
-		int h = RandomUtils.nextInt(0, gen.getMaxNodesByEquation() / 2);
-		EquationNode n1 = new EquationNode(gen.getExpression(), null, h);
-
 		EquationNode p1 = original.parent;
 
+		int h = 0;
+		EquationNode n1 = null;
+
 		if (p1 == null) {
+			h = RandomUtils.nextInt(0, (gen.getMaxNodesByEquation() / 2));
+			n1 = new EquationNode(gen.getExpression(), null, h);
 			gen.setTree(e, n1);
 		} else {
+			h = RandomUtils.nextInt(0, (gen.getMaxNodesByEquation() / 2) - p1.weight());
+			n1 = new EquationNode(gen.getExpression(), null, h);
 			p1.replaceChild(original, n1);
 		}
 

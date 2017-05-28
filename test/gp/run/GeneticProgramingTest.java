@@ -43,7 +43,10 @@ public class GeneticProgramingTest {
 	public final void testFunico() {
 		try {
 			FunicoFile example = FunicoFile.geq;
-			GeneticProgramming instance = buildFunico(example.getFilePath());
+			File file = FileUtils.getFile(example.getFilePath());
+			ExampleReader reader = new ExampleReader(file);
+			FunicoGP instance = FunicoGP.getInstance(reader).traceSearch(true);
+
 			Double best = instance.evolve();
 			assertTrue(best >= 0);
 			assertTrue(best <= example.getBestFitness());
@@ -74,10 +77,10 @@ public class GeneticProgramingTest {
 
 	}
 
-	private GeneticProgramming buildFunico(String filepath) {
+	private FunicoGP buildFunico(String filepath) {
 		File file = FileUtils.getFile(filepath);
 		ExampleReader reader = new ExampleReader(file);
-		GeneticProgramming instance = FunicoGP.getInstance(reader);
+		FunicoGP instance = FunicoGP.getInstance(reader);
 		return instance;
 	}
 

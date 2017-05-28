@@ -26,6 +26,7 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 public class FunicoGP extends GeneticProgramming {
 
 	private ExampleReader reader;
+	private boolean traceSearch = false;
 
 	public static FunicoGP getInstance(ExampleReader reader) {
 		FunicoGP funicoGP = new FunicoGP();
@@ -40,7 +41,6 @@ public class FunicoGP extends GeneticProgramming {
 	@Override
 	public double evolve() {
 		// Search Space definition
-
 		Space<Forest> space = new ForestSpace(new Expression(reader.getExtractor()),
 				reader.getMaxEquations(), reader.getMaxNodesByEquation());
 
@@ -73,8 +73,9 @@ public class FunicoGP extends GeneticProgramming {
 		// Uncomment if you want to trace the function evaluations
 		// Tracer.addTracer(goal, tracer);
 
-		Tracer.addTracer(search, tracer); // Uncomment if you want to trace the
-		// hill-climbing algorithm
+		if (traceSearch) {
+			Tracer.addTracer(search, tracer);
+		}
 
 		// Apply the search method
 		Solution<Forest> solution = search.solve(space, goal);
@@ -84,5 +85,16 @@ public class FunicoGP extends GeneticProgramming {
 		System.out.println(solution.info(Goal.class.getName()));
 		System.out.println(solution.object());
 		return (Double) solution.info(Goal.class.getName());
+	}
+
+	/**
+	 * Set to true if you want to trace the algorithm
+	 * 
+	 * @param traceSearch
+	 * @return
+	 */
+	public FunicoGP traceSearch(boolean traceSearch) {
+		this.traceSearch = traceSearch;
+		return this;
 	}
 }
