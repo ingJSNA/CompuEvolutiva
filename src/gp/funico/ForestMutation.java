@@ -12,10 +12,16 @@ public class ForestMutation extends Variation_1_1<Forest> {
 	public Forest apply(Forest gen) {
 		gen = new Forest(gen);
 		if (Math.random() < CHANGE_SIZE_PROBABILTY) {
-			return changeSizeMutation(gen);
+			gen = changeSizeMutation(gen);
 		} else {
-			return mutationGP(gen);
+			gen = mutationGP(gen);
 		}
+
+		if (gen == null) {
+			System.out.println(gen);
+		}
+
+		return gen;
 	}
 
 	/**

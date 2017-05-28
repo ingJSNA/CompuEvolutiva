@@ -57,6 +57,12 @@ public class Forest implements Cloneable {
 		}
 	}
 
+	/**
+	 * Evaluate the program for the given goal
+	 * 
+	 * @param goal
+	 * @return 0 if accomplish the goal, 1 if it doesn't
+	 */
 	public double evaluate(String goal) {
 		try {
 			String[] sides = StringUtils.split(goal, "=");
@@ -68,10 +74,10 @@ public class Forest implements Cloneable {
 			return 1;
 		} catch (GoalException e) {
 			LOG.debug("No se cumple el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return Integer.MAX_VALUE;
+			throw new RuntimeException(e);
 		} catch (SyntacticalException e) {
 			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return Integer.MAX_VALUE;
+			return 2;
 		} catch (Exception e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
