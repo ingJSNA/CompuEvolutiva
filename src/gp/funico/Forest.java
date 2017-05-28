@@ -76,9 +76,9 @@ public class Forest implements Cloneable {
 			LOG.debug("No se cumple el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		} catch (SyntacticalException e) {
-			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return 2;
-		} catch (Exception e) {
+			LOG.warn("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			return 1000;
+		} catch (Exception | StackOverflowError e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		}

@@ -17,10 +17,6 @@ public class ForestMutation extends Variation_1_1<Forest> {
 			gen = mutationGP(gen);
 		}
 
-		if (gen == null) {
-			System.out.println(gen);
-		}
-
 		return gen;
 	}
 

@@ -64,10 +64,10 @@ public class GeneticProgramingTest {
 		try {
 			for (FunicoFile example : FunicoFile.values()) {
 				GeneticProgramming instance = buildFunico(example.getFilePath());
+				System.out.println("Example: " + example);
 				Double best = instance.evolve();
 				assertTrue(best >= 0);
-				System.out.println(example + ": " + best + " (best " + example.getBestFitness()
-						+ ")");
+				System.out.println("fitness:" + best + " (best " + example.getBestFitness() + ")");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

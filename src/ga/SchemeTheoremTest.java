@@ -107,7 +107,7 @@ public class SchemeTheoremTest {
 
 		// Sel method
 		int POPSIZE = 100;
-		Selection<BitArray> selection = new Roulette<BitArray>();
+		Selection<BitArray> selection = new Roulette();
 
 		BitArray[] pop = space.pick(POPSIZE);
 
@@ -181,7 +181,7 @@ public class SchemeTheoremTest {
 		int MAXITERS = 100;
 		EAFactory<BitArray> factory = new EAFactory<BitArray>();
 		PopulationSearch<BitArray, Double> search = factory.generational_ga(POPSIZE,
-				new Roulette<BitArray>(), mutation, xover, 0.0, MAXITERS);
+				new Roulette(), mutation, xover, 0.0, MAXITERS);
 
 		// Tracking the goal evaluations
 		WriteDescriptors write_desc = new WriteDescriptors();
