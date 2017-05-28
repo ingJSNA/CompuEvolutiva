@@ -73,10 +73,10 @@ public class Forest implements Cloneable {
 			}
 			return 1;
 		} catch (GoalException e) {
-			LOG.debug("No se cumple el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.debug("Problema con el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		} catch (SyntacticalException e) {
-			LOG.warn("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			return 1000;
 		} catch (Exception | StackOverflowError e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);

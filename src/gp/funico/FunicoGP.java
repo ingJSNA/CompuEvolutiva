@@ -57,7 +57,7 @@ public class FunicoGP extends GeneticProgramming {
 		double xover_probability = 1.0;
 
 		// Search method
-		super.MAXITERS = 100;
+		super.MAXITERS = 200;
 		EAFactory<Forest> factory = new EAFactory<Forest>();
 		PopulationSearch<Forest, Double> search = factory.generational_ga(POPSIZE,
 				parent_selection, mutation, xover, xover_probability, MAXITERS);

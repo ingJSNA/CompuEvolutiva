@@ -42,7 +42,7 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			FunicoFile example = FunicoFile.geq;
+			FunicoFile example = FunicoFile.sum;
 			File file = FileUtils.getFile(example.getFilePath());
 			ExampleReader reader = new ExampleReader(file);
 			FunicoGP instance = FunicoGP.getInstance(reader).traceSearch(true);
