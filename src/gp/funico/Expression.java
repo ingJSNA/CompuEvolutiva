@@ -13,13 +13,6 @@ public class Expression {
 
 	public static final String EQUATION_RIGHT_SEPARATOR = "=";
 
-	private static final Map<String, Integer> functionsFunico;
-
-	static {
-		functionsFunico = new HashMap<String, Integer>();
-		functionsFunico.put("s", 1);
-	}
-
 	private final Set<String> variables;
 	private final Set<String> terminals;
 	private final Set<String> mainFunctors;
@@ -37,7 +30,7 @@ public class Expression {
 		variablesAndTerminals = new HashSet<String>(variables);
 		variablesAndTerminals.addAll(terminals);
 
-		this.functions = new HashMap<String, Integer>(functionsFunico);
+		this.functions = new HashMap<String, Integer>();
 
 		// Put each of the elements of functors in functions
 		functors.forEach(functions::putIfAbsent);

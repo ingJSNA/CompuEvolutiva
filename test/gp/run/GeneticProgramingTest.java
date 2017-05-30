@@ -13,8 +13,13 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GeneticProgramingTest {
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(GeneticProgramingTest.class);
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,10 +47,11 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			FunicoFile example = FunicoFile.then;
+			FunicoFile example = FunicoFile.double_f;
 			File file = FileUtils.getFile(example.getFilePath());
 			ExampleReader reader = new ExampleReader(file);
-			FunicoGP instance = FunicoGP.getInstance(reader).traceSearch(true);
+			FunicoGP instance = FunicoGP.getInstance(reader).traceSearch(true)
+					.setMaxIterations(500);
 
 			Double best = instance.evolve();
 			assertTrue(best >= 0);
@@ -65,13 +71,19 @@ public class GeneticProgramingTest {
 			for (FunicoFile example : FunicoFile.values()) {
 				File file = FileUtils.getFile(example.getFilePath());
 				ExampleReader reader = new ExampleReader(file);
-				FunicoGP instance = FunicoGP.getInstance(reader).setMaxIterations(100)
-						.traceSearch(true).setTraceFile("./log/" + example);
+				int[] iterations = new int[] { 100, 200, 300, 400, 500 };
 
-				System.out.println("Example: " + example);
-				Double best = instance.evolve();
-				assertTrue(best >= 0);
-				System.out.println("fitness:" + best + " (best " + example.getBestFitness() + ")");
+				for (int iter : iterations) {
+					FunicoGP instance = FunicoGP.getInstance(reader)
+							.setMaxIterations(iter).traceSearch(true)
+							.setTraceFile("./log/" + example + "-i" + iter);
+
+					LOG.warn("Example: {}, Iterations: {}", example, iter);
+					Double best = instance.evolve();
+					assertTrue(best >= 0);
+					System.out.println("fitness:" + best + " (best "
+							+ example.getBestFitness() + ")");
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

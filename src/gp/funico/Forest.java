@@ -34,7 +34,8 @@ public class Forest implements Cloneable {
 		fitnessCache = new HashMap<String, Double>();
 	}
 
-	public Forest(int maxEquations, int maxNodesByEquation, Expression expression) {
+	public Forest(int maxEquations, int maxNodesByEquation,
+			Expression expression) {
 		this();
 		this.expression = expression;
 		this.maxNodesByEquation = maxNodesByEquation;
@@ -73,31 +74,36 @@ public class Forest implements Cloneable {
 	 * @return 0 if accomplish the goal, 1 if it doesn't
 	 */
 	public double evaluate(String goal) {
-		Double fitness;
+		Double fitness = Double.MAX_VALUE;
 		try {
 			// Check if the fitness for the goal is already calculated
 			if (fitnessCache.containsKey(goal)) {
 				fitness = fitnessCache.get(goal);
 			} else {
 				String[] sides = StringUtils.split(goal, "=");
-				LOG.info("Evaluate source: {}", getSource());
+
 				String value = Evaluator.evalue(getSource(), sides[0]);
 				if (value.equals(sides[1].trim())) {
 					fitness = 0D;
+				} else {
+					fitness = 1D;
 				}
-				fitness = 1D;
 			}
 		} catch (GoalException e) {
-			LOG.error("Problema con el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.error("Problema con el ejemplo. Forest Node: [{}]. Goal: [{}]",
+					this, goal, e);
 			throw new RuntimeException(e);
 		} catch (SyntacticalException e) {
-			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]",
+					this, goal, e);
 			fitness = 1_000D;
 		} catch (Exception | StackOverflowError e) {
-			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.error(
+					"Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]",
+					this, goal, e);
 			throw new RuntimeException(e);
 		}
-		// Cache fitness
+		// Save fitness
 		fitnessCache.put(goal, fitness);
 
 		return fitness;
@@ -164,7 +170,8 @@ public class Forest implements Cloneable {
 
 			// Must be at least one function on the left side
 			if (leftFunctions.isEmpty()) {
-				String oper = RandomCollectionsUtils.getItem(expression.getFunctions());
+				String oper = RandomCollectionsUtils.getItem(expression
+						.getFunctions());
 				EquationNode newRoot = new EquationNode(expression, null, oper);
 				newRoot.children.add(left);
 				left.parent = newRoot;
@@ -177,11 +184,13 @@ public class Forest implements Cloneable {
 				EquationNode equation = right.get(e);
 				if (expression.getVaribles().contains(equation.oper)) {
 					if (leftVariables.isEmpty()) {
-						equation.oper = RandomCollectionsUtils.getItem(expression.getTerminals());
+						equation.oper = RandomCollectionsUtils
+								.getItem(expression.getTerminals());
 					}
 					// All variables in the right side must be in the left side
 					else if (!leftVariables.contains(equation.oper)) {
-						equation.oper = RandomCollectionsUtils.getItem(leftVariables);
+						equation.oper = RandomCollectionsUtils
+								.getItem(leftVariables);
 					}
 				}
 			}

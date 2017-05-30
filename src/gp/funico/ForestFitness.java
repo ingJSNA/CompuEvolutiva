@@ -9,7 +9,8 @@ import unalcol.optimization.OptimizationFunction;
 
 public class ForestFitness extends OptimizationFunction<Forest> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ForestFitness.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ForestFitness.class);
 
 	private ExampleReader reader;
 
@@ -34,7 +35,8 @@ public class ForestFitness extends OptimizationFunction<Forest> {
 		double maxEquations = (double) reader.getMaxEquations();
 
 		if (x.equationCount() > maxEquations) {
-			maxEquationsfitness = Math.abs(equationCount - maxEquations) / maxEquations;
+			maxEquationsfitness = Math.abs(equationCount - maxEquations)
+					/ maxEquations;
 		}
 
 		double maxEquationTerms = (double) x.maxEquationTerms();
@@ -42,11 +44,13 @@ public class ForestFitness extends OptimizationFunction<Forest> {
 		double maxEquationTermsfitness = 0;
 
 		if (maxEquationTerms > maxNodesByEquation) {
-			maxEquationTermsfitness = Math.abs(maxEquationTerms - maxNodesByEquation)
+			maxEquationTermsfitness = Math.abs(maxEquationTerms
+					- maxNodesByEquation)
 					/ maxNodesByEquation;
 		}
 
-		fitness = 0.8 * fitness + 0.2 * (maxEquationsfitness + maxEquationTermsfitness);
+		fitness = 0.9 * fitness + 0.1
+				* (maxEquationsfitness + maxEquationTermsfitness);
 
 		LOG.info("Nodo: {}. Fitness: {}", x, fitness);
 		return fitness;

@@ -19,7 +19,8 @@ import co.edu.unal.funico.interpreter.funico.language.SyntacticalException;
 
 public class ExampleReader {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ExampleReader.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExampleReader.class);
 
 	private int maxEquations;
 	private int maxNodesByEquation;
@@ -35,7 +36,8 @@ public class ExampleReader {
 		String join = "";
 		try {
 			// Read file
-			List<String> lines = FileUtils.readLines(example, StandardCharsets.UTF_8);
+			List<String> lines = FileUtils.readLines(example,
+					StandardCharsets.UTF_8);
 
 			// Save values
 			this.maxEquations = Integer.parseInt(lines.remove(0));
@@ -45,6 +47,8 @@ public class ExampleReader {
 			// Extract information from examples
 			join = StringUtils.join(lines, ";");
 			extractor = new Extractor(join);
+
+			LOG.warn("Functions: {}", extractor.getTableFunctors());
 
 		} catch (IOException e) {
 			LOG.error("Error al leer el archivo: {}", example, e);
