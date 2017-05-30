@@ -5,8 +5,8 @@ enum FunicoFile {
 	double_f("double.txt", 0),
 	even("even.txt", 0.34),
 	iff("iff.txt", 0),
-	max("max.txt", 0.225),
 	mod3("mod3.txt", 0.34),
+	max("max.txt", 0.225),
 	sum("sum.txt", 1),
 	min("min.txt", 0.2),
 	geq("geq.txt", 0.34);

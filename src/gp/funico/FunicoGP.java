@@ -1,6 +1,8 @@
 package gp.funico;
 
 import org.apache.commons.validator.GenericValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import gp.GeneticProgramming;
 import unalcol.descriptors.Descriptors;
@@ -27,6 +29,7 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 
 public class FunicoGP extends GeneticProgramming {
 
+	private static final Logger LOG = LoggerFactory.getLogger(FunicoGP.class);
 	private ExampleReader reader;
 	private boolean traceSearch = false;
 	private String traceFileName;
@@ -93,9 +96,11 @@ public class FunicoGP extends GeneticProgramming {
 
 		tracer.close();
 
-		System.out.println(solution.info(Goal.class.getName()));
-		System.out.println(solution.object());
-		return (Double) solution.info(Goal.class.getName());
+		Double solutionValue = (Double) solution.info(Goal.class.getName());
+		LOG.warn("solutionValue: {}", solutionValue);
+		LOG.warn("Solution: {}", solution.object());
+
+		return solutionValue;
 	}
 
 	/**

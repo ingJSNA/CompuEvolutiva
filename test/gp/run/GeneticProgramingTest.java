@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class GeneticProgramingTest {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(GeneticProgramingTest.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GeneticProgramingTest.class);
 
 	@Before
 	public void setUp() throws Exception {
@@ -68,21 +67,24 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testAllFunico() {
 		try {
-			for (FunicoFile example : FunicoFile.values()) {
+			FunicoFile[] values = FunicoFile.values();
+			/*
+			 * values = new FunicoFile[] { FunicoFile.mod3, FunicoFile.min, FunicoFile.sum,
+			 * FunicoFile.geq };
+			 */
+			for (FunicoFile example : values) {
 				File file = FileUtils.getFile(example.getFilePath());
 				ExampleReader reader = new ExampleReader(file);
 				int[] iterations = new int[] { 100, 200, 300, 400, 500 };
 
 				for (int iter : iterations) {
-					FunicoGP instance = FunicoGP.getInstance(reader)
-							.setMaxIterations(iter).traceSearch(true)
-							.setTraceFile("./log/" + example + "-i" + iter);
+					FunicoGP instance = FunicoGP.getInstance(reader).setMaxIterations(iter)
+							.traceSearch(true).setTraceFile("./log/" + example + "-i" + iter);
 
 					LOG.warn("Example: {}, Iterations: {}", example, iter);
 					Double best = instance.evolve();
 					assertTrue(best >= 0);
-					System.out.println("fitness:" + best + " (best "
-							+ example.getBestFitness() + ")");
+					LOG.warn("fitness: {}", best);
 				}
 			}
 		} catch (Exception e) {
