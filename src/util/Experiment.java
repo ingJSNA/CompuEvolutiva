@@ -2,7 +2,6 @@ package util;
 
 import java.util.concurrent.Callable;
 
-import unalcol.types.real.Statistics;
 import unalcol.types.real.array.DoubleArray;
 
 public class Experiment {
@@ -21,14 +20,12 @@ public class Experiment {
 		double avg = 0.0;
 		for (int r = 0; r < runs; r++) {
 			x[r] = run();
-			System.out.println("run " + r + ": " + x[r]);
 			avg += x[r];
 		}
 
 		avg /= runs;
 		DoubleArray.merge(x);
 		double median = x[runs / 2];
-		System.out.println("median: " + median);
 
 		double v_avg = 0.0;
 		double v_median = 0.0;

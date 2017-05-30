@@ -1,5 +1,7 @@
 package gp.funico;
 
+import org.apache.commons.validator.GenericValidator;
+
 import gp.GeneticProgramming;
 import unalcol.descriptors.Descriptors;
 import unalcol.descriptors.WriteDescriptors;
@@ -27,6 +29,7 @@ public class FunicoGP extends GeneticProgramming {
 
 	private ExampleReader reader;
 	private boolean traceSearch = false;
+	private String traceFileName;
 
 	public static FunicoGP getInstance(ExampleReader reader) {
 		FunicoGP funicoGP = new FunicoGP();
@@ -35,7 +38,8 @@ public class FunicoGP extends GeneticProgramming {
 	}
 
 	private FunicoGP() {
-
+		super();
+		super.MAXITERS = 200;
 	}
 
 	@Override
@@ -57,7 +61,6 @@ public class FunicoGP extends GeneticProgramming {
 		double xover_probability = 1.0;
 
 		// Search method
-		super.MAXITERS = 200;
 		EAFactory<Forest> factory = new EAFactory<Forest>();
 		PopulationSearch<Forest, Double> search = factory.generational_ga(POPSIZE,
 				parent_selection, mutation, xover, xover_probability, MAXITERS);
@@ -71,8 +74,13 @@ public class FunicoGP extends GeneticProgramming {
 		Write.set(Population.class, write_desc);
 		Descriptors.set(Population.class, new PopulationDescriptors<BitArray>());
 
-		Tracer tracer = new FileTracer("log/trace.txt");
-		tracer = new ConsoleTracer();
+		Tracer tracer;
+		if (GenericValidator.isBlankOrNull(traceFileName)) {
+			tracer = new ConsoleTracer();
+		} else {
+			tracer = new FileTracer(this.traceFileName);
+		}
+
 		// Uncomment if you want to trace the function evaluations
 		// Tracer.addTracer(goal, tracer);
 
@@ -98,6 +106,16 @@ public class FunicoGP extends GeneticProgramming {
 	 */
 	public FunicoGP traceSearch(boolean traceSearch) {
 		this.traceSearch = traceSearch;
+		return this;
+	}
+
+	public FunicoGP setMaxIterations(int i) {
+		this.MAXITERS = i;
+		return this;
+	}
+
+	public FunicoGP setTraceFile(String fileName) {
+		this.traceFileName = fileName;
 		return this;
 	}
 }

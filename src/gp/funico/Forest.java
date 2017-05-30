@@ -1,8 +1,10 @@
 package gp.funico;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.RandomUtils;
@@ -20,6 +22,7 @@ public class Forest implements Cloneable {
 	private static final Logger LOG = LoggerFactory.getLogger(Forest.class);
 
 	private List<EquationNode> trees;
+	private Map<String, Double> fitnessCache;
 
 	private Expression expression;
 
@@ -27,7 +30,12 @@ public class Forest implements Cloneable {
 
 	private int maxEquations;
 
+	private Forest() {
+		fitnessCache = new HashMap<String, Double>();
+	}
+
 	public Forest(int maxEquations, int maxNodesByEquation, Expression expression) {
+		this();
 		this.expression = expression;
 		this.maxNodesByEquation = maxNodesByEquation;
 		this.maxEquations = maxEquations;
@@ -47,6 +55,7 @@ public class Forest implements Cloneable {
 	 * @param forest
 	 */
 	public Forest(Forest forest) {
+		this();
 		this.expression = forest.expression;
 		this.maxNodesByEquation = forest.maxNodesByEquation;
 		this.maxEquations = forest.maxEquations;
@@ -64,24 +73,34 @@ public class Forest implements Cloneable {
 	 * @return 0 if accomplish the goal, 1 if it doesn't
 	 */
 	public double evaluate(String goal) {
+		Double fitness;
 		try {
-			String[] sides = StringUtils.split(goal, "=");
-			LOG.info("Evaluate source: {}", getSource());
-			String value = Evaluator.evalue(getSource(), sides[0]);
-			if (value.equals(sides[1].trim())) {
-				return 0;
+			// Check if the fitness for the goal is already calculated
+			if (fitnessCache.containsKey(goal)) {
+				fitness = fitnessCache.get(goal);
+			} else {
+				String[] sides = StringUtils.split(goal, "=");
+				LOG.info("Evaluate source: {}", getSource());
+				String value = Evaluator.evalue(getSource(), sides[0]);
+				if (value.equals(sides[1].trim())) {
+					fitness = 0D;
+				}
+				fitness = 1D;
 			}
-			return 1;
 		} catch (GoalException e) {
-			LOG.debug("Problema con el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
+			LOG.error("Problema con el ejemplo. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		} catch (SyntacticalException e) {
 			LOG.debug("SyntacticalException. Forest Node: [{}]. Goal: [{}]", this, goal, e);
-			return 1000;
+			fitness = 1_000D;
 		} catch (Exception | StackOverflowError e) {
 			LOG.error("Error al evaluar el programa. Forest Node: [{}]. Goal: [{}]", this, goal, e);
 			throw new RuntimeException(e);
 		}
+		// Cache fitness
+		fitnessCache.put(goal, fitness);
+
+		return fitness;
 	}
 
 	/**

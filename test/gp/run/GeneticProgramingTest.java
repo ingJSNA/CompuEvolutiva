@@ -42,7 +42,7 @@ public class GeneticProgramingTest {
 	@Test
 	public final void testFunico() {
 		try {
-			FunicoFile example = FunicoFile.sum;
+			FunicoFile example = FunicoFile.then;
 			File file = FileUtils.getFile(example.getFilePath());
 			ExampleReader reader = new ExampleReader(file);
 			FunicoGP instance = FunicoGP.getInstance(reader).traceSearch(true);
@@ -63,7 +63,11 @@ public class GeneticProgramingTest {
 	public final void testAllFunico() {
 		try {
 			for (FunicoFile example : FunicoFile.values()) {
-				GeneticProgramming instance = buildFunico(example.getFilePath());
+				File file = FileUtils.getFile(example.getFilePath());
+				ExampleReader reader = new ExampleReader(file);
+				FunicoGP instance = FunicoGP.getInstance(reader).setMaxIterations(100)
+						.traceSearch(true).setTraceFile("./log/" + example);
+
 				System.out.println("Example: " + example);
 				Double best = instance.evolve();
 				assertTrue(best >= 0);
