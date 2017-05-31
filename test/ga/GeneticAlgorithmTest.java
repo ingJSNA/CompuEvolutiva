@@ -41,4 +41,20 @@ public class GeneticAlgorithmTest {
 		System.out.println(solution.getArray());
 	}
 
+	@Test
+	public final void testAckley() {
+		AckleyGA ga = new AckleyGA().traceSearch(true);
+		Double solution;
+		try {
+			solution = ga.call();
+			assertNotNull(solution);
+			System.out.println(solution);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail(e.getClass().getSimpleName());
+		}
+
+	}
+
 }
