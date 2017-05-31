@@ -59,41 +59,31 @@ public class AckleyGA implements Callable<Double> {
 
 	private double evolve() {
 		// Search Space definition
-		int DIM = 10;
-		double[] min = DoubleArray.create(DIM, -5.12);
-		double[] max = DoubleArray.create(DIM, 5.12);
-
-		Space<double[]> space = new HyperCube(min, max);
+		Space<BitArray> space = new BinarySpace(DIM);
 
 		// Optimization Function
-		OptimizationFunction<double[]> function = new Rastrigin();
-		Goal<double[], Double> goal = new OptimizationGoal<double[]>(function);
+		OptimizationFunction<BitArray> function = new RealFunction();
+
+		// maximizing, remove the parameter false if minimizing
+		Goal<BitArray, Double> goal = new OptimizationGoal<BitArray>(function, false);
 
 		// Variation definition
-		DoubleGenerator random = new SimplestSymmetricPowerLawGenerator(); // It can be set to
-																			// Gaussian or other
-																			// symmetric number
-																			// generator (centered
-																			// in zero)
-		PickComponents pick = new PermutationPick(DIM / 2); // It can be set to null if the mutation
-															// operator is applied to every
-															// component of the solution array
-		// AdaptMutationIntensity adapt = new OneFifthRule(500, 0.9); // It can be set to null if no
-		// mutation adaptation is required
-		IntensityMutation mutation = new IntensityMutation(0.1, random, pick);
-		RealArityTwo xover = new LinearXOver();
+		Selection<BitArray> parent_selection = new Tournament<BitArray>(4);
+		Variation_1_1<BitArray> mutation = new BitMutation();
+		XOver xover = new XOver();
+		double xover_probability = 1.0;
 
 		// Search method
 
-		EAFactory<double[]> factory = new EAFactory<double[]>();
-		PopulationSearch<double[], Double> search = factory.steady_ga(POPSIZE,
-				new Tournament<double[]>(4), mutation, xover, 0.6, MAXITERS);
+		EAFactory<BitArray> factory = new EAFactory<BitArray>();
+		PopulationSearch<BitArray, Double> search = factory.generational_ga(POPSIZE,
+				parent_selection, mutation, xover, xover_probability, MAXITERS);
 
 		// Tracking the goal evaluations
 		WriteDescriptors write_desc = new WriteDescriptors();
 		Write.set(double[].class, new DoubleArrayPlainWrite(false));
 		Write.set(Population.class, write_desc);
-		Descriptors.set(Population.class, new PopulationDescriptors<double[]>());
+		Descriptors.set(Population.class, new PopulationDescriptors<BitArray>());
 
 		Tracer tracer;
 		if (GenericValidator.isBlankOrNull(traceFileName)) {
@@ -110,11 +100,10 @@ public class AckleyGA implements Callable<Double> {
 		}
 
 		// Apply the search method
-		Solution<double[]> solution = search.solve(space, goal);
+		Solution<BitArray> solution = search.solve(space, goal);
 
-		double goalSolution = (double) solution.info(Goal.class.getName());
-		System.out.println(goalSolution);
-		return goalSolution;
+		System.out.println(solution.info(Goal.class.getName()));
+		return 0;
 	}
 
 	@Override
