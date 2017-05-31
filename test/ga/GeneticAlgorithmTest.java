@@ -1,6 +1,10 @@
 package ga;
 
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
+
+import function.real.Ackley;
 import ga.impl.CrossoverGeneticOperator;
 import ga.impl.ElitismReplace;
 import ga.impl.ImageSimilarity;
@@ -8,11 +12,16 @@ import ga.impl.SingleBitMutation;
 import ga.impl.UniformSelection;
 import ga.impl.OnePointCrossover;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GeneticAlgorithmTest {
+
+	private static final Logger LOG = LoggerFactory.getLogger(GeneticAlgorithmTest.class);
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,11 +51,12 @@ public class GeneticAlgorithmTest {
 	}
 
 	@Test
-	public final void testAckley() {
-		AckleyGA ga = new AckleyGA().traceSearch(true);
+	public final void testAckleyGA() {
+
+		AckleyGA ga = new AckleyGA().traceSearch(true).setMaxIterations(100_000);
 		Double solution;
 		try {
-			solution = ga.call();
+			solution = ga.evolve();
 			assertNotNull(solution);
 			System.out.println(solution);
 		} catch (Exception e) {
@@ -57,4 +67,14 @@ public class GeneticAlgorithmTest {
 
 	}
 
+	@Test
+	public final void testAckley() {
+		for (int i = 0; i < 100; i++) {
+			double[] x = new double[] { RandomUtils.nextDouble(0, 32.768 * 2) - 32.768 };
+			double myAckley = new Ackley().value(x);
+			Double unalcolAckley = new unalcol.optimization.real.testbed.Ackley().apply(x);
+			double diff = myAckley - unalcolAckley;
+			LOG.warn("X: {}, diff: {}", Arrays.toString(x), diff);
+		}
+	}
 }
