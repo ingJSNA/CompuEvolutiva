@@ -43,8 +43,10 @@ public class FunicoApp {
 			System.out.println(Evaluator.evalue("sum(0,X) = X; sum(s(X),Y) = s(sum(X,Y))",
 					"sum(5,3)"));
 			System.out.println();
-			System.out.println(Evaluator.evalue("sum(0,X) = X; sum(s(X),Y) = s(sum(X,Y))",
-					"sum(5,4) = 0"));
+
+			System.out.println(Evaluator.evalue(
+					"geq(2, 2)=false; geq(A, 0)=geq(s(geq(geq(A, A), s(1))), s(geq(s(1), s(5))));",
+					"geq(0,0)"));
 		} catch (ExampleException | ProgramException | GoalException | LexicalException
 				| SyntacticalException ex) {
 			System.out.println(ex);

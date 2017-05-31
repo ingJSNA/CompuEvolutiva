@@ -68,10 +68,10 @@ public class GeneticProgramingTest {
 	public final void testAllFunico() {
 		try {
 			FunicoFile[] values = FunicoFile.values();
-			/*
-			 * values = new FunicoFile[] { FunicoFile.mod3, FunicoFile.min, FunicoFile.sum,
-			 * FunicoFile.geq };
-			 */
+
+			values = new FunicoFile[] { FunicoFile.geq, FunicoFile.max, FunicoFile.min,
+					FunicoFile.sum };
+
 			for (FunicoFile example : values) {
 				File file = FileUtils.getFile(example.getFilePath());
 				ExampleReader reader = new ExampleReader(file);
