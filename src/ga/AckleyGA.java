@@ -62,7 +62,7 @@ public class AckleyGA implements Callable<Double> {
 		Space<BitArray> space = new BinarySpace(DIM);
 
 		// Optimization Function
-		OptimizationFunction<BitArray> function = new RealFunction();
+		OptimizationFunction<BitArray> function = new RealFunctionFitness();
 
 		// maximizing, remove the parameter false if minimizing
 		Goal<BitArray, Double> goal = new OptimizationGoal<BitArray>(function, false);
