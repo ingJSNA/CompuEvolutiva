@@ -62,6 +62,7 @@ public class AckleyGA implements Callable<Double> {
 		int DIM = 10;
 		double[] min = DoubleArray.create(DIM, -5.12);
 		double[] max = DoubleArray.create(DIM, 5.12);
+
 		Space<double[]> space = new HyperCube(min, max);
 
 		// Optimization Function
@@ -85,12 +86,13 @@ public class AckleyGA implements Callable<Double> {
 		// Search method
 
 		EAFactory<double[]> factory = new EAFactory<double[]>();
-		PopulationSearch<double[], Double> search = factory.generational_ga(POPSIZE,
+		PopulationSearch<double[], Double> search = factory.steady_ga(POPSIZE,
 				new Tournament<double[]>(4), mutation, xover, 0.6, MAXITERS);
 
 		// Tracking the goal evaluations
-		// WriteDescriptors write_desc = new WriteDescriptors();
+		WriteDescriptors write_desc = new WriteDescriptors();
 		Write.set(double[].class, new DoubleArrayPlainWrite(false));
+		Write.set(Population.class, write_desc);
 		Descriptors.set(Population.class, new PopulationDescriptors<double[]>());
 
 		Tracer tracer;
