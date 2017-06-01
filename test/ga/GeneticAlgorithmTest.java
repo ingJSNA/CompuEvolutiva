@@ -71,7 +71,7 @@ public class GeneticAlgorithmTest {
 	public final void testAckleyGAExperiment() {
 
 		try {
-			for (int run = 1; run <= 30; run++) {
+			for (int run = 1; run <= 15; run++) {
 				int iterations = 50_000;
 				AckleyGA ga = new AckleyGA().traceSearch(true).setMaxIterations(iterations)
 						.setTraceFile("./log/ga-r" + run + "-i" + iterations);
