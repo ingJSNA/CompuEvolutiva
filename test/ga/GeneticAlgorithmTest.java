@@ -53,12 +53,33 @@ public class GeneticAlgorithmTest {
 	@Test
 	public final void testAckleyGA() {
 
-		AckleyGA ga = new AckleyGA().traceSearch(true).setMaxIterations(100_000);
+		AckleyGA ga = new AckleyGA().traceSearch(true).setMaxIterations(50_000);
 		Double solution;
 		try {
 			solution = ga.evolve();
 			assertNotNull(solution);
 			System.out.println(solution);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail(e.getClass().getSimpleName());
+		}
+
+	}
+
+	@Test
+	public final void testAckleyGAExperiment() {
+
+		try {
+			for (int run = 1; run <= 30; run++) {
+				int iterations = 50_000;
+				AckleyGA ga = new AckleyGA().traceSearch(true).setMaxIterations(iterations)
+						.setTraceFile("./log/ga-r" + run + "-i" + iterations);
+				Double solution = ga.evolve();
+				assertNotNull(solution);
+				System.out.println(solution);
+
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

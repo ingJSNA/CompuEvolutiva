@@ -56,7 +56,8 @@ import unalcol.types.real.array.DoubleArrayPlainWrite;
 public class AckleyGA {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AckleyGA.class);
-	private final int DIM = 24;
+
+	private final int DIM = 8 * 50;
 	private final int POPSIZE = 100;
 	private int MAXITERS = 1_000;
 	private boolean traceSearch;
@@ -67,6 +68,8 @@ public class AckleyGA {
 	}
 
 	public double evolve() {
+		LOG.warn("DIM: {}, POPSIZE: {}, MAXITERS: {}", DIM, POPSIZE, MAXITERS);
+
 		// Search Space definition
 		Space<BitArray> space = new BinarySpace(DIM);
 
@@ -78,7 +81,7 @@ public class AckleyGA {
 
 		// Variation definition
 		Selection<BitArray> parent_selection = new Tournament<BitArray>(4);
-		Variation_1_1<BitArray> mutation = new BitMutation(0.0);
+		Variation_1_1<BitArray> mutation = new BitMutation();
 		XOver xover = new XOver();
 		double xover_probability = 1.0;
 
